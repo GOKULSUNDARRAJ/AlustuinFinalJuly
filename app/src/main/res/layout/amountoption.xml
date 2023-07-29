@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@drawable/dia_bg"
+    android:layout_height="match_parent">
+    <Button
+        android:layout_width="60dp"
+        android:layout_height="5dp"
+        android:fontFamily="serif"
+        android:background="@color/Accent1"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold|italic"></Button>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Payment Option"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        android:textStyle="bold|italic"></TextView>
+
+    <LinearLayout
+        android:id="@+id/googlepayLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/google"
+            android:layout_width="@dimen/_40mdp"
+            android:layout_height="@dimen/_40mdp"
+            android:padding="4dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/google"
+            app:civ_border_color="@color/black"
+            app:civ_border_width="1dp"
+           />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="40dp"
+            android:fontFamily="sans-serif"
+            android:text="Pay With Google Pay"
+            android:textStyle="italic|bold"></TextView>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/phonepayLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="8dp"
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/phonepay"
+            android:layout_width="@dimen/_40mdp"
+            android:layout_height="@dimen/_40mdp"
+            android:padding="4dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/phonepay"
+            app:civ_border_color="@color/black"
+            app:civ_border_width="1dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textStyle="bold|italic"
+            android:layout_marginLeft="40dp"
+            android:fontFamily="sans-serif"
+            android:text="Pay With Phone Pay"></TextView>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/paythLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:background="?android:attr/selectableItemBackground"
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/payth"
+            android:layout_width="@dimen/_40mdp"
+            android:layout_height="@dimen/_40mdp"
+            android:padding="4dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/paytm"
+            app:civ_border_color="@color/black"
+            app:civ_border_width="1dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="40dp"
+            android:textStyle="bold|italic"
+            android:fontFamily="sans-serif"
+            android:text="Pay With Paytm Pay"></TextView>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,133 @@
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+}
+
+android {
+    signingConfigs {
+//        debug {
+//            storeFile file('C:\\Users\\20106\\Documents\\Keystore\\Connect.jks')
+//            storePassword '123456'
+//            keyPassword '123456'
+//            keyAlias var
+//        }
+    }
+    compileSdkVersion 31
+//    buildToolsVersion "31.0.0"
+
+    defaultConfig {
+        applicationId "com.gokulsundar4545.connectwithpeople"
+        minSdkVersion 24
+        targetSdkVersion 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures{
+        viewBinding true
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.4.0'
+    implementation 'com.google.android.material:material:1.6.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    implementation 'com.google.firebase:firebase-auth:21.1.0'
+
+    implementation 'com.google.firebase:firebase-database:20.1.0'
+    implementation 'com.google.firebase:firebase-storage:20.1.0'
+
+
+
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.google.firebase:firebase-messaging:23.1.1'
+
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    implementation 'com.github.marlonlom:timeago:4.0.3'
+    implementation 'com.github.3llomi:CircularStatusView:V1.0.3'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.github.MrNouri:DynamicSizes:1.0'
+    implementation 'com.github.iammert:ReadableBottomBar:0.2'
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+    implementation'com.github.florent37:diagonallayout:1.0.9'
+
+
+
+    // FirebaseUI for Firebase Realtime Database
+    implementation 'com.firebaseui:firebase-ui-database:8.0.2'
+
+    // FirebaseUI for Cloud Firestore
+    implementation 'com.firebaseui:firebase-ui-firestore:8.0.2'
+
+    // FirebaseUI for Firebase Auth
+    implementation 'com.firebaseui:firebase-ui-auth:8.0.2'
+
+    // FirebaseUI for Cloud Storage
+    implementation 'com.firebaseui:firebase-ui-storage:8.0.2'
+
+    implementation 'com.squareup.picasso:picasso:2.8'
+
+    implementation 'com.etebarian:meow-bottom-navigation:1.2.0'
+    implementation 'com.github.OMARIHAMZA:StoryView:1.0.2-alpha'
+
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+    implementation 'com.android.volley:volley:1.2.1'
+
+    implementation 'com.airbnb.android:lottie:3.4.4'
+
+    implementation 'com.github.sharish:ShimmerRecyclerView:v1.3'
+
+    // Gson
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+
+    implementation group: 'dev.shreyaspatil.EasyUpiPayment', name: 'EasyUpiPayment', version: '3.0.3'
+
+
+
+
+    implementation 'com.google.firebase:firebase-auth:16.0.2'
+    implementation 'com.google.firebase:firebase-database:16.0.1'
+    implementation 'com.google.firebase:firebase-core:16.0.1'
+    //add this
+    implementation 'com.google.firebase:firebase-storage:16.0.1'
+    implementation 'com.rengwuxian.materialedittext:library:2.1.4'
+    //add this library and this
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+
+    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
+    implementation 'com.zolad:zoominimageview:1.0.0'
+
+    implementation 'com.github.Spikeysanju:MotionToast:1.4'
+
+    //add these libraries
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+
+    implementation 'com.github.Spikeysanju:MotionToast:1.4'
+
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}

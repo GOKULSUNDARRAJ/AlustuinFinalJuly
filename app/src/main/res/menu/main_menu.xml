@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Settings">
+        <menu>
+
+            <group android:checkableBehavior="single">
+                <item
+                    android:icon="@drawable/ic_baseline_edit_24"
+                    android:id="@+id/editprofile"
+                    android:title="Edit Profile" />
+
+                <item
+                    android:icon="@drawable/ic_baseline_payments_24"
+                    android:id="@+id/Reward"
+                    android:title="Rewards" />
+
+                <item
+                    android:icon="@drawable/ic_baseline_login_24"
+                    android:id="@+id/logout"
+                    android:title="Logout" />
+
+
+            </group>
+        </menu>
+    </item>
+
+
+
+
+
+</menu>

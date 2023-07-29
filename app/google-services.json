@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "956924839511",
+    "firebase_url": "https://alstuin-c6efe-default-rtdb.firebaseio.com",
+    "project_id": "alstuin-c6efe",
+    "storage_bucket": "alstuin-c6efe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:956924839511:android:6fd3d5026b3e7f803f8512",
+        "android_client_info": {
+          "package_name": "com.gokulsundar4545.connectwithpeople"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "956924839511-9vd7lq4583947t1ugo68gk102lje5vec.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gokulsundar4545.connectwithpeople",
+            "certificate_hash": "ea4cb2ec810937261edf5efaa97115c9e62d9445"
+          }
+        },
+        {
+          "client_id": "956924839511-aota0500f19875u4itgbve8ll4vuiev5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4rUGicX8teOs34A4SuOaxmqvGSjpm2CY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "956924839511-aota0500f19875u4itgbve8ll4vuiev5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
