@@ -2,26 +2,32 @@ package com.gokulsundar4545.connectwithpeople.Model;
 
 public class Follow {
 
-    private String followedBy;
-    private long followedAt;
+    private String id;
+    private String name;
+
 
     public Follow(){
 
     }
 
-    public String getFollowedBy() {
-        return followedBy;
+    public Follow(String id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
-    public void setFollowedBy(String followedBy) {
-        this.followedBy = followedBy;
+    public String getId() {
+        return id;
     }
 
-    public long getFollowedAt() {
-        return followedAt;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setFollowedAt(long followedAt) {
-        this.followedAt = followedAt;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/black"
     android:layout_height="match_parent">
 
 
@@ -25,19 +26,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/videoView"
-        app:layout_constraintTop_toTopOf="@+id/videoView" />
+        app:layout_constraintTop_toTopOf="@+id/videoView" /><![CDATA[
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image"
-        android:layout_width="@dimen/_35mdp"
-        android:layout_height="@dimen/_35mdp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="690dp"
-        android:padding="4dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/profile"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" /><![CDATA[
+
 
 
 
@@ -54,6 +45,12 @@
 
 
     " />
+
+
+
+
+
+
 
 
 
@@ -61,16 +58,34 @@
 
     ]]>
 
-    <TextView
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_image"
+        android:layout_width="@dimen/_35mdp"
+        android:layout_height="@dimen/_35mdp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="600dp"
+        android:padding="4dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/profile"
+        app:layout_constraintBottom_toTopOf="@+id/vedioname"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <kr.co.prnd.readmore.ReadMoreTextView
         android:id="@+id/vedioname"
-        android:layout_width="wrap_content"
+        android:layout_width="370dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="4dp"
         android:text="TextView"
         android:textColor="@color/white"
-        app:layout_constraintHorizontal_bias="0.03"
-        app:layout_constraintStart_toStartOf="@+id/profile_image"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:readMoreColor="@color/white"
+        app:readMoreMaxLine="2"
+        app:readMoreText="."
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/play"
@@ -156,10 +171,10 @@
 
     <TextView
         android:id="@+id/like"
-        android:layout_width="41dp"
-        android:layout_height="37dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="340dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="28dp"
         android:drawableLeft="@drawable/realslike"
         android:drawablePadding="10dp"
         android:gravity="center"
@@ -167,14 +182,13 @@
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/videoView"
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintTop_toTopOf="@+id/videoView"
-        app:layout_constraintVertical_bias="0.302" />
+        app:layout_constraintVertical_bias="0.318" />
 
     <TextView
         android:id="@+id/dislike"
-        android:layout_width="41dp"
-        android:layout_height="37dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginTop="44dp"
         android:drawableLeft="@drawable/ic_baseline_thumb_down_24"
         android:drawablePadding="10dp"
@@ -188,9 +202,9 @@
 
     <TextView
         android:id="@+id/comment"
-        android:layout_width="41dp"
-        android:layout_height="37dp"
-        android:layout_marginTop="128dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="112dp"
         android:drawableLeft="@drawable/ic_baseline_comment"
         android:drawablePadding="10dp"
         android:gravity="center"
@@ -214,9 +228,9 @@
 
     <TextView
         android:id="@+id/share"
-        android:layout_width="41dp"
-        android:layout_height="37dp"
-        android:layout_marginTop="204dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="184dp"
         android:drawableLeft="@drawable/ic_send"
         android:drawablePadding="10dp"
         android:gravity="center"

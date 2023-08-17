@@ -17,8 +17,8 @@
 
     <View
         android:id="@+id/view15"
-        android:layout_width="411dp"
-        android:layout_height="211dp"
+        android:layout_width="wrap_content"
+        android:layout_height="400dp"
         android:layout_marginTop="8dp"
         android:background="@color/Accent1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,29 +27,30 @@
 
     <View
         android:id="@+id/view9"
-        android:layout_width="80dp"
-        android:layout_height="22dp"
+        android:layout_width="200dp"
+        android:layout_height="15dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="5dp"
         android:background="@color/Accent1"
-        app:layout_constraintStart_toEndOf="@+id/view"
-        app:layout_constraintTop_toBottomOf="@+id/view8" />
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintStart_toEndOf="@+id/view" />
 
-    
-    <View
+
+    <ImageView
         android:id="@+id/view"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="24dp"
-        android:background="@color/Accent1"
+        android:background="@drawable/roundshad"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/view8"
         android:layout_width="80dp"
-        android:layout_height="22dp"
+        android:layout_height="15dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
         android:background="@color/Accent1"
         app:layout_constraintStart_toEndOf="@+id/view"
         app:layout_constraintTop_toTopOf="@+id/view" />

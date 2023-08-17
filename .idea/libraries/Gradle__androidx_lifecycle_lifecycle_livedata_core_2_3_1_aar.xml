@@ -1,13 +1,12 @@
 <component name="libraryTable">
-  <library name="Gradle: androidx.lifecycle:lifecycle-livedata-core:2.3.1@aar">
+  <library name="Gradle: androidx.lifecycle:lifecycle-livedata-core:2.3.1@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-6.7.1-bin/caches/transforms-2/files-2.1/ed582874d45b4a812465249e68aca8ed/lifecycle-livedata-core-2.3.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/wrapper/dists/gradle-6.7.1-bin/caches/transforms-2/files-2.1/ed582874d45b4a812465249e68aca8ed/lifecycle-livedata-core-2.3.1/res" />
-      <root url="file://$USER_HOME$/.gradle/wrapper/dists/gradle-6.7.1-bin/caches/transforms-2/files-2.1/ed582874d45b4a812465249e68aca8ed/lifecycle-livedata-core-2.3.1/AndroidManifest.xml" />
+      <root url="jar://$PROJECT_DIR$/../mydd/caches/transforms-3/8d9a05a33aef722eed7fcd07eb5702c0/transformed/lifecycle-livedata-core-2.3.1/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../mydd/caches/transforms-3/8d9a05a33aef722eed7fcd07eb5702c0/transformed/lifecycle-livedata-core-2.3.1/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-6.7.1-bin/caches/modules-2/files-2.1/androidx.lifecycle/lifecycle-livedata-core/2.3.1/38ecd5651d87b6db994df01f93fc72d6e59b846a/lifecycle-livedata-core-2.3.1-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../mydd/caches/modules-2/files-2.1/androidx.lifecycle/lifecycle-livedata-core/2.3.1/38ecd5651d87b6db994df01f93fc72d6e59b846a/lifecycle-livedata-core-2.3.1-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

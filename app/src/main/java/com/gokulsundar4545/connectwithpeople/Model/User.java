@@ -13,10 +13,60 @@ public class User {
     private String token;
     private String status;
     private int followerCount;
-
+    private String bio;
+    private String gender;
+    private long Time;
+    private boolean isBloked;
+    private String lasttime;
 
     public User(){
 
+    }
+
+    public User(long time) {
+        Time = time;
+    }
+
+    public long getTime() {
+        return Time;
+    }
+
+    public void setTime(long time) {
+        Time = time;
+    }
+
+    public User(String bio, String gender) {
+        this.bio = bio;
+        this.gender = gender;
+    }
+
+    public User(boolean isBloked) {
+        this.isBloked = isBloked;
+    }
+
+
+    public boolean isBloked() {
+        return isBloked;
+    }
+
+    public void setBloked(boolean bloked) {
+        isBloked = bloked;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public User(String department) {
@@ -149,6 +199,10 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getLasttime() {
+        return lasttime;
     }
 }
 

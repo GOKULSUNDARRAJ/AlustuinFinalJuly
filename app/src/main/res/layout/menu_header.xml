@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:background="@drawable/bg123"
+    android:background="@color/colorPrimaryDark"
     android:paddingLeft="15dp">
 
 
@@ -13,7 +13,7 @@
         android:layout_marginBottom="10dp"
         android:textColor="@color/white"
         android:layout_width="wrap_content"
-        android:text="To connect Student and Alumini" />
+        android:text="If you can dream it, you can make it so" />
 
     <TextView
         android:id="@+id/app_name"

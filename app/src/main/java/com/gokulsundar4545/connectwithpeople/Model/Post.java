@@ -2,46 +2,36 @@ package com.gokulsundar4545.connectwithpeople.Model;
 
 public class Post {
 
-
     private String postId;
     private String postImg;
     private String postedBy;
     private String postDescription;
     private long posterAt;
     private int postLike;
-
     private int commentCount;
-    public Post(int commentCount) {
-        this.commentCount = commentCount;
+    private String coverUrl;
+    private String title;
+    private String subtitle;
+    private String songurl;
+
+    private String postType;
+
+    public Post() {
     }
 
-
-
-
-
-
-    public Post(String postId, String postImg, String postedBy, String postDescription, long posterAt) {
+    public Post(String postId, String postImg, String postedBy, String postDescription, long posterAt, int postLike, int commentCount, String coverUrl, String title, String subtitle, String songurl, String postType) {
         this.postId = postId;
         this.postImg = postImg;
         this.postedBy = postedBy;
         this.postDescription = postDescription;
         this.posterAt = posterAt;
-    }
-
-    public int getCommentCount() {
-        return commentCount;
-    }
-
-    public void setCommentCount(int commentCount) {
-        this.commentCount = commentCount;
-    }
-
-    public int getPostLike() {
-        return postLike;
-    }
-
-    public void setPostLike(int postLike) {
         this.postLike = postLike;
+        this.commentCount = commentCount;
+        this.coverUrl = coverUrl;
+        this.title = title;
+        this.subtitle = subtitle;
+        this.songurl = songurl;
+        this.postType = postType;
     }
 
     public String getPostId() {
@@ -84,7 +74,59 @@ public class Post {
         this.posterAt = posterAt;
     }
 
-    public  Post(){
+    public int getPostLike() {
+        return postLike;
+    }
 
+    public void setPostLike(int postLike) {
+        this.postLike = postLike;
+    }
+
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public String getCoverUrl() {
+        return coverUrl;
+    }
+
+    public void setCoverUrl(String coverUrl) {
+        this.coverUrl = coverUrl;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
+    }
+
+    public String getSongurl() {
+        return songurl;
+    }
+
+    public void setSongurl(String songurl) {
+        this.songurl = songurl;
+    }
+
+    public String getPostType() {
+        return postType;
+    }
+
+    public void setPostType(String postType) {
+        this.postType = postType;
     }
 }

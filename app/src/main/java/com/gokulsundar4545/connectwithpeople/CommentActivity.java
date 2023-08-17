@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -61,6 +62,7 @@ public class CommentActivity extends AppCompatActivity {
         binding=ActivityCommentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        setStatusBarColor(getResources().getColor(android.R.color.white));
 
         auth =FirebaseAuth.getInstance();
         uid=auth.getCurrentUser();
@@ -83,13 +85,19 @@ public class CommentActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull  DataSnapshot snapshot) {
 
-                Post post=snapshot.getValue(Post.class);
-                Picasso.get()
-                        .load(post.getPostImg())
-                        .into(binding.postImg);
-                binding.description.setText(post.getPostDescription());
-                binding.like.setText(post.getPostLike()+"");
-                binding.comment.setText(post.getCommentCount()+"");
+                try {
+
+                    Post post=snapshot.getValue(Post.class);
+                    Picasso.get()
+                            .load(post.getPostImg())
+                            .into(binding.postImg);
+                    binding.description.setText(post.getPostDescription());
+                    binding.like.setText("likes"+" "+post.getPostLike()+"");
+                    binding.comment.setText("comments"+" "+post.getCommentCount()+"");
+                }catch (Exception e){
+
+                }
+
             }
 
             @Override
@@ -175,6 +183,19 @@ public class CommentActivity extends AppCompatActivity {
                                                 .child(postBy)
                                                 .push()
                                                 .setValue(notification);
+
+                                        Notification notification1=new Notification();
+                                        notification1.setNotificationBy(FirebaseAuth.getInstance().getUid());
+                                        notification1.setNotificationAt(new Date().getTime());
+                                        notification1.setPostId(postId);
+                                        notification1.setPostBy(postBy);
+                                        notification1.setType("comment");
+
+                                        FirebaseDatabase.getInstance().getReference()
+                                                .child("notification1")
+                                                .child(postBy)
+                                                .push()
+                                                .setValue(notification);
                                     }
                                 });
                             }
@@ -218,6 +239,13 @@ public class CommentActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void setStatusBarColor(int color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            getWindow().setStatusBarColor(color);
+        }
     }
 
 }

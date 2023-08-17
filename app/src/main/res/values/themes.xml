@@ -14,7 +14,20 @@
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:windowEnterAnimation">@transition/tra</item>
         <item name="android:windowExitAnimation">@transition/tra</item>
+
+        <item name="bottomSheetDialogTheme">
+            @style/AppBottomSheetDialogTheme
+        </item>
         <!-- Customize your theme here. -->
+    </style>
+
+
+    <style name="AppBottomSheetDialogTheme"
+
+        parent="Theme.Design.Light.BottomSheetDialog">
+
+        <item name="bottomSheetStyle">@style/AppModelStyle</item>
+
     </style>
 
     <style name="Theme.ConnectWithpeople.NoActionBar">
@@ -47,4 +60,28 @@
     <style name="Theme.CityGuideApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.CityGuideApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppModelStyle"
+
+        parent="Widget.Design.BottomSheet.Modal">
+
+        <item name="android:background">@drawable/toast_round_background</item>
+
+    </style>
+
+    <style name="EditText">
+        <item name="android:singleLine">true</item>
+        <item name="colorControlNormal">#FFFFFF</item>
+        <item name="colorControlActivated">#FFFFFF</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+
+    <style name="CustomDialogAnimation" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowEnterAnimation">@anim/enter_animation</item>
+        <item name="android:windowExitAnimation">@anim/exit_animation</item>
+    </style>
+
+
 </resources>

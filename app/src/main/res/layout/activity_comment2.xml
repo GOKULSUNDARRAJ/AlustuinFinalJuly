@@ -67,40 +67,41 @@
                 android:layout_marginStart="3dp"
                 android:background="@drawable/tv"
                 android:gravity="center"
-                android:paddingStart="10dp"
-                android:paddingTop="1dp"
-                android:paddingEnd="5dp"
-                android:paddingRight="5dp"
+                android:paddingRight="10dp"
+                android:paddingTop="2dp"
+                android:paddingLeft="5dp"
+                android:paddingBottom="2dp"
                 android:text="User Name"
+                android:textSize="10dp"
                 app:layout_constraintBottom_toBottomOf="@+id/profile_image"
                 app:layout_constraintStart_toEndOf="@+id/view13"
                 app:layout_constraintTop_toTopOf="@+id/profile_image" />
 
             <TextView
                 android:id="@+id/description"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:hint="Description"
                 android:textColor="@color/black"
                 android:textStyle="italic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/postImg"
-                app:layout_constraintTop_toBottomOf="@+id/profile_image" />
+                app:layout_constraintTop_toBottomOf="@+id/postImg" />
 
 
             <TextView
                 android:id="@+id/like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
-                android:drawableLeft="@drawable/ic_baseline_thumb_up_24"
                 android:drawablePadding="10dp"
                 android:gravity="center"
-                android:text=""
+                android:text="likes"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/description" />
@@ -110,41 +111,23 @@
                 android:id="@+id/comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:drawableLeft="@drawable/ic_baseline_comment_24"
                 android:drawablePadding="10dp"
                 android:gravity="center"
-                android:text=""
+                android:text="comments"
                 android:textColor="@color/black"
-                app:layout_constraintStart_toEndOf="@id/like"
-                app:layout_constraintTop_toBottomOf="@+id/description" />
+                app:layout_constraintStart_toStartOf="@+id/like"
+                app:layout_constraintTop_toBottomOf="@+id/like" />
 
-
-            <TextView
-                android:id="@+id/share"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:drawableLeft="@drawable/ic_baseline_screen_share_24"
-                android:drawablePadding="10dp"
-                android:gravity="center"
-                android:text=""
-                android:textColor="@color/black"
-                app:layout_constraintStart_toEndOf="@id/comment"
-                app:layout_constraintTop_toBottomOf="@+id/description" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/commentRv"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_margin="5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/like" />
+                app:layout_constraintTop_toBottomOf="@+id/comment" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
@@ -155,6 +138,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:visibility="gone"
         android:layout_marginBottom="8dp"
         android:background="@drawable/storkes"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -180,7 +164,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
             android:layout_toLeftOf="@id/commentpost"
-            android:background="@null"
+            android:background="@android:color/transparent"
             android:hint="Type a message..."
             android:padding="10dp"
             android:textColor="@color/black_shade"
@@ -189,8 +173,8 @@
 
         <ImageButton
             android:id="@+id/commentpost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="@drawable/ic_send"

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@drawable/dia_bg"
+    android:layout_height="match_parent">
+    <Button
+        android:layout_width="60dp"
+        android:layout_height="5dp"
+        android:fontFamily="serif"
+        android:background="@color/Accent1"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold|italic"></Button>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Choose Option"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        android:textStyle="bold"></TextView>
+
+    <LinearLayout
+        android:id="@+id/deleteLayout"
+        android:layout_width="match_parent"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        >
+
+        <ImageView
+            android:id="@+id/google"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/share"
+           />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="sans-serif"
+            android:text="Share Post"
+            android:textStyle="italic|bold"></TextView>
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

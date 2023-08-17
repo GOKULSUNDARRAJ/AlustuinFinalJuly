@@ -1,15 +1,15 @@
 <component name="libraryTable">
-  <library name="Gradle: com.github.ybq:Android-SpinKit:1.4.0@aar">
+  <library name="Gradle: com.github.ybq:Android-SpinKit:1.4.0@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-6.7.1-bin/caches/transforms-2/files-2.1/ee72a50620152e90c4ffc8431f5361a8/jetified-Android-SpinKit-1.4.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/wrapper/dists/gradle-6.7.1-bin/caches/transforms-2/files-2.1/ee72a50620152e90c4ffc8431f5361a8/jetified-Android-SpinKit-1.4.0/res" />
-      <root url="file://$USER_HOME$/.gradle/wrapper/dists/gradle-6.7.1-bin/caches/transforms-2/files-2.1/ee72a50620152e90c4ffc8431f5361a8/jetified-Android-SpinKit-1.4.0/AndroidManifest.xml" />
+      <root url="file://$PROJECT_DIR$/../mydd/caches/transforms-3/73b2b419a431d9dc37feab9c524170fb/transformed/jetified-Android-SpinKit-1.4.0/AndroidManifest.xml" />
+      <root url="file://$PROJECT_DIR$/../mydd/caches/transforms-3/73b2b419a431d9dc37feab9c524170fb/transformed/jetified-Android-SpinKit-1.4.0/res" />
+      <root url="jar://$PROJECT_DIR$/../mydd/caches/transforms-3/73b2b419a431d9dc37feab9c524170fb/transformed/jetified-Android-SpinKit-1.4.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-6.7.1-bin/caches/modules-2/files-2.1/com.github.ybq/Android-SpinKit/1.4.0/65342739d3408aec3f1249f21cffa52400ac3508/Android-SpinKit-1.4.0-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../mydd/caches/modules-2/files-2.1/com.github.ybq/Android-SpinKit/1.4.0/98f90f886659b7dc5e7cf15ce5ffbcbfb74cb5b2/Android-SpinKit-1.4.0-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-6.7.1-bin/caches/modules-2/files-2.1/com.github.ybq/Android-SpinKit/1.4.0/f58852551150babe66d223b0c3107ecece8eff7f/Android-SpinKit-1.4.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../mydd/caches/modules-2/files-2.1/com.github.ybq/Android-SpinKit/1.4.0/9f1144146d77e42370b2d9e144d81a875eacb8ac/Android-SpinKit-1.4.0-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

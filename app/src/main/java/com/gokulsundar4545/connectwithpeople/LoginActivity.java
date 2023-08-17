@@ -3,8 +3,11 @@ package com.gokulsundar4545.connectwithpeople;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,6 +24,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import static com.gokulsundar4545.connectwithpeople.R.color.voilet1;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -44,7 +49,13 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-        binding.login.setOnClickListener(new View.OnClickListener() {
+        binding.email.addTextChangedListener(textWatcher);
+        binding.password.addTextChangedListener(textWatcher);
+
+
+
+
+        binding.letuserloginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -74,8 +85,9 @@ public class LoginActivity extends AppCompatActivity {
 
                                         Intent intentIt=new Intent(LoginActivity.this,MainActivity.class);
                                             startActivity(intentIt);
-                                            Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
 
+                                            Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
+                                            finish();
 
                                     }
 
@@ -108,5 +120,36 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    private final TextWatcher textWatcher = new TextWatcher( ) {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @SuppressLint("ResourceAsColor")
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            String Email = binding.email.getText( ).toString( ).trim( );
+            String Password = binding.password.getText( ).toString( ).trim( );
+
+            if (!Email.isEmpty( ) && !Password.isEmpty( ) && Password.length()>7) {
+
+                binding.letuserloginbtn.setVisibility(View.VISIBLE);
+                binding.letuserloginbtn.setEnabled(true);
+
+            }else {
+                binding.letuserloginbtn.setVisibility(View.GONE);
+                binding.letuserloginbtn.setEnabled(false);
+            }
+
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 
 }

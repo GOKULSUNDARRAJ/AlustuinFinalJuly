@@ -2,9 +2,12 @@ package com.gokulsundar4545.connectwithpeople;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 
 
 public class SplashScreen extends AppCompatActivity {
@@ -20,12 +23,13 @@ public class SplashScreen extends AppCompatActivity {
 
         Handler handler;
 
-
+        setStatusBarColor(getResources().getColor(android.R.color.white));
         Runnable runnable=new Runnable() {
             @Override
             public void run() {
-                Intent intent=new Intent(SplashScreen.this,LoginActivity.class);
-                startActivity(intent);
+                Intent intent=new Intent(SplashScreen.this,StartActivityFirst.class);
+                Bundle b = ActivityOptions.makeSceneTransitionAnimation(SplashScreen.this).toBundle();
+                startActivity(intent,b);
                 finish();
             }
         };
@@ -34,6 +38,13 @@ public class SplashScreen extends AppCompatActivity {
         handler.postDelayed(runnable,SPLASH_TIME_OUT);
 
     }
+    private void setStatusBarColor(int color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            getWindow().setStatusBarColor(color);
+        }
+    }
+
 
 
 }

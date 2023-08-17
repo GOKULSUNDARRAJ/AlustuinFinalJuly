@@ -5,21 +5,18 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.gokulsundar4545.connectwithpeople.ChartActivity;
-import com.gokulsundar4545.connectwithpeople.Model.Follow;
 import com.gokulsundar4545.connectwithpeople.Model.ModelChat;
-import com.gokulsundar4545.connectwithpeople.Model.Notification;
 import com.gokulsundar4545.connectwithpeople.Model.User;
 import com.gokulsundar4545.connectwithpeople.R;
+import com.gokulsundar4545.connectwithpeople.ThereProfileActivity;
 import com.gokulsundar4545.connectwithpeople.databinding.UserSampleBinding;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -32,219 +29,151 @@ import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Date;
 
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewHolder> {
+public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
-    Context context;
-    ArrayList<User> list1;
-    FirebaseAuth firebaseAuth;
-    boolean ischat;
+    private Context context;
+    private ArrayList<User> userList;
+    private boolean isChat;
 
-    String thelastmsg;
+    private String lastMessage;
+    private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReference;
 
-
-    public UserAdapter(Context context, ArrayList<User> list,boolean ischat) {
+    public UserAdapter(Context context, ArrayList<User> userList, boolean isChat) {
         this.context = context;
-        this.list1 = list;
-        this.ischat=ischat;
+        this.userList = userList;
+        this.isChat = isChat;
+        firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
     @NonNull
     @Override
-    public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(R.layout.user_sample,parent,false);
-
-        return new viewHolder(view);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.user_sample, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull  UserAdapter.viewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        User user = userList.get(position);
+        String hisUid = user.getUid();
 
-
-        final String hisUid=list1.get(position).getUid();
-        firebaseAuth=FirebaseAuth.getInstance();
-
-
-
-
-        FirebaseUser user1 = FirebaseAuth.getInstance().getCurrentUser();
-        String myuid=user1.getUid();
-
-
-
-        holder.binding.ChatLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(context, ChartActivity.class);
-                intent.putExtra("hisUId",hisUid);
-                intent.putExtra("myUId",myuid);
-                intent.putExtra("hisToken",list1.get(position).getToken());
-                context.startActivity(intent);
-
-            }
+        holder.binding.ChatLayout.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ThereProfileActivity.class);
+            intent.putExtra("uid", hisUid);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
         });
 
-        User user=list1.get(position);
-
-
-        if (ischat){
-            if (user.getStatus().equals("online")){
-                holder.binding.online.setVisibility(View.VISIBLE);
-                holder.binding.offline.setVisibility(View.GONE);
-            }else {
-                holder.binding.offline.setVisibility(View.VISIBLE);
-                holder.binding.online.setVisibility(View.GONE);
-
-
-            }
-        }else {
-            holder.binding.offline.setVisibility(View.GONE);
+        if (user.getStatus().equals("online")) {
+            holder.binding.online.setVisibility(View.VISIBLE);
+        } else {
             holder.binding.online.setVisibility(View.GONE);
-
-
         }
 
+        if (isChat) {
+            if (user.getStatus().equals("online")) {
+                holder.binding.online.setVisibility(View.VISIBLE);
+            } else {
+                holder.binding.online.setVisibility(View.GONE);
+            }
+        } else {
+            holder.binding.online.setVisibility(View.GONE);
+        }
 
-
-        if (ischat){
-            LastMessage(user.getUid(),holder.lastMsg);
-        }else {
+        if (isChat) {
+            lastMessage(user.getUid(), holder.lastMsg);
+        } else {
             holder.lastMsg.setVisibility(View.GONE);
         }
 
         Picasso.get()
                 .load(user.getProfile_photo())
+                .placeholder(R.drawable.profile)
                 .into(holder.binding.profileImage);
 
         holder.binding.name.setText(user.getName());
 
+        holder.followBtn.setOnClickListener(view -> toggleFavorite(holder.followBtn, user, position));
 
-
-
-        FirebaseDatabase.getInstance().getReference()
-                .child("Users")
-                .child(user.getUid())
-                .child("followers")
-                .child(FirebaseAuth.getInstance().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull  DataSnapshot snapshot) {
-
-                if (snapshot.exists()){
-                    holder.binding.followbtn.setBackgroundDrawable(ContextCompat.getDrawable(context,R.drawable.follow_bg));
-                    holder.binding.followbtn.setText("Following");
-                    holder.binding.followbtn.setTextColor(context.getResources().getColor(R.color.black));
-                    holder.binding.followbtn.setEnabled(false);
-                }else {
-                    holder.binding.followbtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-
-                            Follow follow=new Follow();
-                            follow.setFollowedBy(FirebaseAuth.getInstance().getUid());
-                            follow.setFollowedAt(new Date().getTime());
-
-
-                            FirebaseDatabase.getInstance().getReference()
-                                    .child("Users")
-                                    .child(user.getUserID())
-                                    .child("followers")
-                                    .child(FirebaseAuth.getInstance().getUid())
-                                    .setValue(follow).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
-                                    FirebaseDatabase.getInstance().getReference()
-                                            .child("Users")
-                                            .child(user.getUserID())
-                                            .child("followerCount")
-                                            .setValue(user.getFollowerCount()+1).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
-                                            Toast.makeText(context, "you Followed"+user.getName(), Toast.LENGTH_SHORT).show();
-
-                                            Notification notification=new Notification();
-                                            notification.setNotificationBy(FirebaseAuth.getInstance().getUid());
-                                            notification.setNotificationAt(new Date().getTime());
-                                            notification.setType("follows");
-
-                                            FirebaseDatabase.getInstance().getReference()
-                                                    .child("notification")
-                                                    .child(user.getUserID())
-                                                    .push()
-                                                    .setValue(notification);
-                                        }
-                                    });
-                                }
-                            });
-
-                        }
-                    });
-
+        // Add listener to set the favorite icon based on whether the user is in favorites
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+            DatabaseReference userFavoritesRef = databaseReference.child("Users").child(userId).child("youfollowing");
+            userFavoritesRef.orderByChild("id").equalTo(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        // User is in favorites, set unfavorite icon
+                        holder.followBtn.setText("following");
+                        holder.followBtn.setTextColor(context.getResources().getColor(R.color.black));
+                        holder.followBtn.setBackgroundResource(R.drawable.unfollow);
+                    } else {
+                        // User is not in favorites, set favorite icon
+                        holder.followBtn.setText("follow");
+                        holder.followBtn.setBackgroundResource(R.drawable.follow);
+                        holder.followBtn.setTextColor(context.getResources().getColor(R.color.white));
+                    }
                 }
 
-            }
-
-            @Override
-            public void onCancelled(@NonNull  DatabaseError error) {
-
-            }
-        });
-
-
-
-
-
-
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    showToast("Failed to update favorite icon");
+                }
+            });
+        }
     }
 
     @Override
     public int getItemCount() {
-        return list1.size();
-
+        return userList.size();
     }
 
-    public class viewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView lastMsg;
         UserSampleBinding binding;
-        public viewHolder(@NonNull  View itemView) {
-            super(itemView);
+        TextView followBtn;
 
-            binding=UserSampleBinding.bind(itemView);
-            lastMsg=itemView.findViewById(R.id.profession);
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            binding = UserSampleBinding.bind(itemView);
+            lastMsg = itemView.findViewById(R.id.profession);
+            followBtn = itemView.findViewById(R.id.followbtn);
         }
     }
 
-    private void LastMessage(String friendid, TextView lastmsg){
-        thelastmsg="default";
-        FirebaseUser firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reference=FirebaseDatabase.getInstance().getReference().child("Chat");
+    private void lastMessage(String friendId, TextView lastMsg) {
+        lastMessage = "default";
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Chat");
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                for (DataSnapshot ds:snapshot.getChildren()){
-                    ModelChat chat=ds.getValue(ModelChat.class);
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    ModelChat chat = ds.getValue(ModelChat.class);
 
-                    if (firebaseUser!=null && chat!=null){
-
-                        if (chat.getSender().equals(friendid) && chat.getReceiver().equals(firebaseUser.getUid()) ||
-                                chat.getSender().equals(firebaseUser.getUid()) && chat.getReceiver().equals(friendid)){
-                            thelastmsg=chat.getMessage();
+                    if (firebaseUser != null && chat != null) {
+                        if (chat.getSender().equals(friendId) && chat.getReceiver().equals(firebaseUser.getUid()) ||
+                                chat.getSender().equals(firebaseUser.getUid()) && chat.getReceiver().equals(friendId)) {
+                            lastMessage = chat.getMessage();
                         }
                     }
-
                 }
 
-                switch (thelastmsg){
+                switch (lastMessage) {
                     case "default":
-                        lastmsg.setText("No Message");
+                        lastMsg.setText("No Message");
                         break;
                     default:
-                        lastmsg.setText(thelastmsg);
+                        lastMsg.setText(lastMessage);
                 }
 
-                thelastmsg="default";
+                lastMessage = "default";
             }
 
             @Override
@@ -252,5 +181,74 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewHolder> {
 
             }
         });
+    }
+
+    private void toggleFavorite(TextView followBtn, User user, int position) {
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+            DatabaseReference userFavoritesRef = databaseReference.child("Users").child(userId).child("youfollowing");
+            userFavoritesRef.orderByChild("id").equalTo(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        // User is already in favorites, remove them
+                        for (DataSnapshot childSnapshot : snapshot.getChildren()) {
+                            childSnapshot.getRef().removeValue();
+                        }
+                        followBtn.setText("follow");
+                        followBtn.setBackgroundResource(R.drawable.follow);
+                        followBtn.setTextColor(context.getResources().getColor(R.color.white));
+                        showToast("Started unfollowing");
+                    } else {
+                        // User is not in favorites, add them
+                        String followUid = userFavoritesRef.push().getKey(); // Generate a unique key for the follow
+                        userFavoritesRef.child(followUid).child("id").setValue(user.getUid());
+                        followBtn.setText("following");
+                        followBtn.setBackgroundResource(R.drawable.unfollow);
+                        followBtn.setTextColor(context.getResources().getColor(R.color.black));
+                        showToast("Started following");
+                    }
+
+                    // Notify adapter of item change for the specific position
+                    notifyItemChanged(position);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    showToast("Failed to update favorites");
+                }
+            });
+
+            // Also update the follow status for the other user's followers
+            DatabaseReference userFollowersRef = databaseReference.child("Users").child(user.getUid()).child("yourfollowers");
+            userFollowersRef.orderByChild("id").equalTo(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        // Current user is already a follower, remove them
+                        for (DataSnapshot childSnapshot : snapshot.getChildren()) {
+                            childSnapshot.getRef().removeValue();
+                        }
+                    } else {
+                        // Current user is not a follower, add them
+                        String followUid = userFollowersRef.push().getKey(); // Generate a unique key for the follow
+                        userFollowersRef.child(followUid).child("id").setValue(userId);
+                    }
+
+                    // Notify adapter of item change for the specific position
+                    notifyItemChanged(position);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    showToast("Failed to update followers");
+                }
+            });
+        }
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 }

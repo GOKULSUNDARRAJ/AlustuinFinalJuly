@@ -4,5 +4,5 @@
     <cache-path
         name="shared_image"
         path="images/"/>
-
+    <files-path name="videos" path="videos/" />
 </paths>

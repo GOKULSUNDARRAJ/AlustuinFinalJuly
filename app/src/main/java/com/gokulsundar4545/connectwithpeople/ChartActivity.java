@@ -9,7 +9,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -126,7 +129,7 @@ public class ChartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chart2);
-
+        setStatusBarColor(getResources().getColor(android.R.color.white));
 
         readMessage();
         seenMessage();
@@ -213,10 +216,12 @@ public class ChartActivity extends AppCompatActivity {
                     try {
                         Picasso.get()
                                 .load(hisImage)
+                                .placeholder(R.drawable.profile)
                                 .into(profile);
                     } catch (Exception e) {
                         Picasso.get()
                                 .load(R.drawable.profile)
+                                .placeholder(R.drawable.profile)
                                 .into(profile);
                     }
 
@@ -263,6 +268,11 @@ public class ChartActivity extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+                Drawable drawable = ContextCompat.getDrawable(ChartActivity.this, R.drawable.backgroundcclip2);
+                sendbtn.setColorFilter(ContextCompat.getColor(ChartActivity.this, android.R.color.white), PorterDuff.Mode.SRC_IN);
+                sendbtn.setBackground(drawable);
+
+
             }
 
             @Override
@@ -272,10 +282,22 @@ public class ChartActivity extends AppCompatActivity {
                 } else {
                     chechtypingStatus(hisUid);
                 }
+
+                Drawable drawable = ContextCompat.getDrawable(ChartActivity.this, R.drawable.backgroundcclip2);
+                sendbtn.setColorFilter(ContextCompat.getColor(ChartActivity.this, android.R.color.white), PorterDuff.Mode.SRC_IN);
+                sendbtn.setBackground(drawable);
+
+
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
+
+                Drawable drawable = ContextCompat.getDrawable(ChartActivity.this, R.drawable.backgroundcclip2);
+                sendbtn.setColorFilter(ContextCompat.getColor(ChartActivity.this, android.R.color.white), PorterDuff.Mode.SRC_IN);
+                sendbtn.setBackground(drawable);
+
+
 
             }
         });
@@ -285,41 +307,34 @@ public class ChartActivity extends AppCompatActivity {
 
     private void ShowImagePickDialog() {
 
-
         String[] options = {"Camera", "Gallery"};
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomDialogAnimation);
         builder.setTitle("Choose Image From");
-
 
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (i == 0) {
-
-                    if (!checkCameraPermission()){
+                    if (!checkCameraPermission()) {
                         requsetCameraPermission();
-                    }else {
-                       pickFromCamera();
-
+                    } else {
+                        pickFromCamera();
                     }
                 }
-
                 if (i == 1) {
-
-                    if (!checkStoragePermission()){
+                    if (!checkStoragePermission()) {
                         requsetStoragePermission();
-                    }else {
+                    } else {
                         picKFromGallery();
                     }
-
                 }
             }
         });
 
         builder.show();
-
     }
+
 
 
     private void sendImageMessage(Uri image_rui) throws IOException {
@@ -729,6 +744,13 @@ public class ChartActivity extends AppCompatActivity {
         databaseReference.updateChildren(hashMap);
     }
 
+
+    private void setStatusBarColor(int color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            getWindow().setStatusBarColor(color);
+        }
+    }
 
 }
 

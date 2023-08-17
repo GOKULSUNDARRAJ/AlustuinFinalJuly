@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_margin="2dp"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/imagestory"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/caption"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/roundwhite43"
+        android:gravity="center"
+        android:text="hi"
+        android:textSize="12dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/imagestory"
+        app:layout_constraintTop_toTopOf="@+id/imagestory"></TextView>
+
+    <ImageView
+        android:id="@+id/secelctiamge"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/checkmark"
+        android:padding="5dp"
+        android:visibility="gone"
+        android:tint="@color/white"
+        android:background="@drawable/roundwhite46"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

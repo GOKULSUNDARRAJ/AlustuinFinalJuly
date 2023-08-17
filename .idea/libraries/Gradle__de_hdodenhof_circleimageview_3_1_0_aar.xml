@@ -1,15 +1,15 @@
 <component name="libraryTable">
-  <library name="Gradle: de.hdodenhof:circleimageview:3.1.0@aar">
+  <library name="Gradle: de.hdodenhof:circleimageview:3.1.0@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-6.7.1-bin/caches/transforms-2/files-2.1/f0d461ed8a8cbd8aa6ee89e6b9c1f9ce/jetified-circleimageview-3.1.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/wrapper/dists/gradle-6.7.1-bin/caches/transforms-2/files-2.1/f0d461ed8a8cbd8aa6ee89e6b9c1f9ce/jetified-circleimageview-3.1.0/res" />
-      <root url="file://$USER_HOME$/.gradle/wrapper/dists/gradle-6.7.1-bin/caches/transforms-2/files-2.1/f0d461ed8a8cbd8aa6ee89e6b9c1f9ce/jetified-circleimageview-3.1.0/AndroidManifest.xml" />
+      <root url="file://$PROJECT_DIR$/../mydd/caches/transforms-3/5eb7e2bcbd459d64f702fac83834062a/transformed/jetified-circleimageview-3.1.0/AndroidManifest.xml" />
+      <root url="file://$PROJECT_DIR$/../mydd/caches/transforms-3/5eb7e2bcbd459d64f702fac83834062a/transformed/jetified-circleimageview-3.1.0/res" />
+      <root url="jar://$PROJECT_DIR$/../mydd/caches/transforms-3/5eb7e2bcbd459d64f702fac83834062a/transformed/jetified-circleimageview-3.1.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-6.7.1-bin/caches/modules-2/files-2.1/de.hdodenhof/circleimageview/3.1.0/e33964c462b854162fee2bd3cd52889ef878df77/circleimageview-3.1.0-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../mydd/caches/modules-2/files-2.1/de.hdodenhof/circleimageview/3.1.0/e33964c462b854162fee2bd3cd52889ef878df77/circleimageview-3.1.0-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-6.7.1-bin/caches/modules-2/files-2.1/de.hdodenhof/circleimageview/3.1.0/e5635e59d66b172f3e99c6a7044dc9535c95d180/circleimageview-3.1.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../mydd/caches/modules-2/files-2.1/de.hdodenhof/circleimageview/3.1.0/e5635e59d66b172f3e99c6a7044dc9535c95d180/circleimageview-3.1.0-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

@@ -1,36 +1,36 @@
 package com.gokulsundar4545.connectwithpeople.Model;
 
 public class VedioMode {
-
-    String vedioname;
-    String vedioUrl;
-    String search;
-    private String VedioId;
-    private String vedioBy;
+    private String vedioId; // This should be the push ID
+    private String vedioUrl;
     private String vedioDescription;
-    private long vedioposterAt;
-    private int vediopostLike;
-
+    private String vedioBy;
     private int vediocommentCount;
+    private int vediopostLike;
+    private long vedioposterAt;
+    private boolean isLiked;
+    public VedioMode() {
 
-    public VedioMode(String vedioname, String vedioUrl, String search, String vedioId, String vedioBy, String vedioDescription, long vedioposterAt, int vediopostLike, int vediocommentCount) {
-        this.vedioname = vedioname;
+    }
+
+    public VedioMode(String vedioId, String vedioUrl, String vedioDescription, String vedioBy, int vediocommentCount, int vediopostLike, long vedioposterAt, boolean isLiked) {
+        this.vedioId = vedioId;
         this.vedioUrl = vedioUrl;
-        this.search = search;
-        VedioId = vedioId;
-        this.vedioBy = vedioBy;
         this.vedioDescription = vedioDescription;
-        this.vedioposterAt = vedioposterAt;
-        this.vediopostLike = vediopostLike;
+        this.vedioBy = vedioBy;
         this.vediocommentCount = vediocommentCount;
+        this.vediopostLike = vediopostLike;
+        this.vedioposterAt = vedioposterAt;
+        this.isLiked = isLiked;
     }
 
-    public String getVedioname() {
-        return vedioname;
+
+    public String getVedioId() {
+        return vedioId;
     }
 
-    public void setVedioname(String vedioname) {
-        this.vedioname = vedioname;
+    public void setVedioId(String vedioId) {
+        this.vedioId = vedioId;
     }
 
     public String getVedioUrl() {
@@ -41,20 +41,12 @@ public class VedioMode {
         this.vedioUrl = vedioUrl;
     }
 
-    public String getSearch() {
-        return search;
+    public String getVedioDescription() {
+        return vedioDescription;
     }
 
-    public void setSearch(String search) {
-        this.search = search;
-    }
-
-    public String getVedioId() {
-        return VedioId;
-    }
-
-    public void setVedioId(String vedioId) {
-        VedioId = vedioId;
+    public void setVedioDescription(String vedioDescription) {
+        this.vedioDescription = vedioDescription;
     }
 
     public String getVedioBy() {
@@ -65,20 +57,12 @@ public class VedioMode {
         this.vedioBy = vedioBy;
     }
 
-    public String getVedioDescription() {
-        return vedioDescription;
+    public int getVediocommentCount() {
+        return vediocommentCount;
     }
 
-    public void setVedioDescription(String vedioDescription) {
-        this.vedioDescription = vedioDescription;
-    }
-
-    public long getVedioposterAt() {
-        return vedioposterAt;
-    }
-
-    public void setVedioposterAt(long vedioposterAt) {
-        this.vedioposterAt = vedioposterAt;
+    public void setVediocommentCount(int vediocommentCount) {
+        this.vediocommentCount = vediocommentCount;
     }
 
     public int getVediopostLike() {
@@ -89,14 +73,19 @@ public class VedioMode {
         this.vediopostLike = vediopostLike;
     }
 
-    public int getVediocommentCount() {
-        return vediocommentCount;
+    public long getVedioposterAt() {
+        return vedioposterAt;
     }
 
-    public void setVediocommentCount(int vediocommentCount) {
-        this.vediocommentCount = vediocommentCount;
+    public void setVedioposterAt(long vedioposterAt) {
+        this.vedioposterAt = vedioposterAt;
     }
 
-    public VedioMode() {
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(boolean liked) {
+        isLiked = liked;
     }
 }

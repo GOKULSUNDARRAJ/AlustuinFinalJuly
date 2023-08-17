@@ -171,6 +171,7 @@ public class VedioAdapter extends FirebaseRecyclerAdapter<VedioMode, VedioAdapte
                 User user = snapshot.getValue(User.class);
                 Picasso.get()
                         .load(user.getProfile_photo())
+                        .placeholder(R.drawable.profile)
                         .into(holder.profile);
                 holder.username.setText(user.getName());
 
@@ -219,7 +220,7 @@ public class VedioAdapter extends FirebaseRecyclerAdapter<VedioMode, VedioAdapte
         }
 
         public void setVedioData(VedioMode vedioMode) {
-            vedioname.setText(vedioMode.getVedioname());
+            vedioname.setText(vedioMode.getVedioDescription());
             videoView.setVideoPath(vedioMode.getVedioUrl());
 
 
@@ -292,6 +293,8 @@ public class VedioAdapter extends FirebaseRecyclerAdapter<VedioMode, VedioAdapte
 
         }
     }
+
+
 
 
 }

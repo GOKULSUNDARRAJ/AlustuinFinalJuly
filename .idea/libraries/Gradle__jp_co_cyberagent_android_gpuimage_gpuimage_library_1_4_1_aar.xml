@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1@aar" external-system-id="GRADLE">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../mydd/caches/transforms-3/349e6e565c23a2fc8b9c68dd87d289fb/transformed/jetified-gpuimage-library-1.4.1/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../mydd/caches/transforms-3/349e6e565c23a2fc8b9c68dd87d289fb/transformed/jetified-gpuimage-library-1.4.1/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../mydd/caches/modules-2/files-2.1/jp.co.cyberagent.android.gpuimage/gpuimage-library/1.4.1/9510964232ff55daf24895b3754842d6d26981eb/gpuimage-library-1.4.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../mydd/caches/modules-2/files-2.1/jp.co.cyberagent.android.gpuimage/gpuimage-library/1.4.1/e04693205031ab2fbbe4e014271f02b2b0154023/gpuimage-library-1.4.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

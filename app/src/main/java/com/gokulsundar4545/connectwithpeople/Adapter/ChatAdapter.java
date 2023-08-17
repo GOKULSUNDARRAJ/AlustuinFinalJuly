@@ -1,10 +1,14 @@
 package com.gokulsundar4545.connectwithpeople.Adapter;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +19,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gokulsundar4545.connectwithpeople.Model.ModelChat;
 import com.gokulsundar4545.connectwithpeople.R;
+import com.gokulsundar4545.connectwithpeople.ZoomActivitynew;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -72,6 +78,19 @@ public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             String message=chatList.get(position).getMessage();
             String timeStamp=chatList.get(position).getTimestamp();
             String type=chatList.get(position).getType();
+            String textmessga=chatList.get(position).getMessagetext();
+            String imagemessga=chatList.get(position).getMessageimage();
+
+            String postposition=chatList.get(position).getPosition();
+
+
+            if (chatList.get(position).isIsseen()==true){
+                    holder.deliveredtv.setText("Seen");
+                }else {
+                    holder.deliveredtv.setText("Delivered");
+
+            }
+
 
             Calendar cal=Calendar.getInstance(Locale.ENGLISH);
             cal.setTimeInMillis(Long.parseLong(timeStamp));
@@ -83,12 +102,21 @@ public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
                 holder.messageTv.setText(message);
 
-            }else {
+            }else if (type.equals("image")){
                 holder.messageTv.setVisibility(View.GONE);
                 holder.messageIv.setVisibility(View.VISIBLE);
 
                 Picasso.get()
                         .load(message)
+                        .into(holder.messageIv);
+
+            }else if (type.equals("both")){
+
+                holder.messageTv.setVisibility(View.VISIBLE);
+                holder.messageIv.setVisibility(View.VISIBLE);
+                holder.messageTv.setText(textmessga);
+                Picasso.get()
+                        .load(imagemessga)
                         .into(holder.messageIv);
 
             }
@@ -108,6 +136,50 @@ public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             }catch (Exception e){
 
             }
+
+
+            try{
+                holder.messageTv.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        try {
+                            Intent intent = new Intent(context, ZoomActivity.class);
+                            intent.putExtra("Position", Integer.parseInt(postposition));
+                            context.startActivity(intent);
+                        }catch (Exception e){
+
+                        }
+
+                        return false;
+
+                    }
+                });
+            }catch (Exception e){
+
+            }
+
+
+
+
+
+
+            holder.messageIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(holder.messageIv.getContext(), ZoomActivitynew.class);
+                    // Pass image URL as an extra
+                    intent.putExtra("imageUrl", imagemessga);
+
+                    Pair[] pairs=new Pair[1];
+                    pairs[0] =new Pair<View,String>(holder.messageIv,"transaction_player");
+
+                    ActivityOptions options=ActivityOptions.makeSceneTransitionAnimation((Activity) view.getContext(),pairs);
+
+                    holder.messageIv.getContext().startActivity(intent,options.toBundle());
+                }
+            });
+
+
 
             holder.messageLayout.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -139,15 +211,6 @@ public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
 
 
-            if (position==chatList.size()-1){
-                if (chatList.get(position).isIsseen()){
-                    holder.deliveredtv.setText("Seen");
-                }else {
-                    holder.deliveredtv.setText("Delivered");
-                }
-            }else {
-                holder.deliveredtv.setVisibility(View.GONE);
-            }
 
 
 
@@ -208,9 +271,11 @@ public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     class ViewHolder extends RecyclerView.ViewHolder{
 
         ImageView profileIv,messageIv;
-        TextView messageTv,timeTv,deliveredtv;
+        TextView timeTv,deliveredtv;
 
-        RelativeLayout messageLayout;
+        kr.co.prnd.readmore.ReadMoreTextView messageTv;
+
+        CardView messageLayout;
 
         public ViewHolder(@NonNull  View itemView) {
             super(itemView);
@@ -219,8 +284,8 @@ public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             messageTv=itemView.findViewById(R.id.messagetv);
             timeTv=itemView.findViewById(R.id.timetv);
             deliveredtv=itemView.findViewById(R.id.isseentv);
-            messageLayout=itemView.findViewById(R.id.messageLayout);
-            messageIv=itemView.findViewById(R.id.messageImage);
+            messageLayout=itemView.findViewById(R.id.card_gchat_message_me);
+            messageIv=itemView.findViewById(R.id.imageView);
         }
     }
 }

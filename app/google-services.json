@@ -8,22 +8,22 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:956924839511:android:6fd3d5026b3e7f803f8512",
+        "mobilesdk_app_id": "1:956924839511:android:2d417a345079888a3f8512",
         "android_client_info": {
           "package_name": "com.gokulsundar4545.connectwithpeople"
         }
       },
       "oauth_client": [
         {
-          "client_id": "956924839511-9vd7lq4583947t1ugo68gk102lje5vec.apps.googleusercontent.com",
+          "client_id": "956924839511-advdvkb91586fkhqhf29tgkuaapfh65q.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.gokulsundar4545.connectwithpeople",
-            "certificate_hash": "ea4cb2ec810937261edf5efaa97115c9e62d9445"
+            "certificate_hash": "c164875d68472339d6fa707255adc9506775dee6"
           }
         },
         {
-          "client_id": "956924839511-aota0500f19875u4itgbve8ll4vuiev5.apps.googleusercontent.com",
+          "client_id": "956924839511-eu3j8s7ghp8d1u313a3479roc8mn0kq3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],

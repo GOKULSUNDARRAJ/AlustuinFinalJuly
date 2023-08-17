@@ -1,9 +1,9 @@
 <component name="libraryTable">
-  <library name="Gradle: com.github.MrNouri:DynamicSizes:1.0@aar">
+  <library name="Gradle: com.github.MrNouri:DynamicSizes:1.0@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-6.7.1-bin/caches/transforms-2/files-2.1/dd52fa71e414a3688a96ea1abbfa9afd/jetified-DynamicSizes-1.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/wrapper/dists/gradle-6.7.1-bin/caches/transforms-2/files-2.1/dd52fa71e414a3688a96ea1abbfa9afd/jetified-DynamicSizes-1.0/res" />
-      <root url="file://$USER_HOME$/.gradle/wrapper/dists/gradle-6.7.1-bin/caches/transforms-2/files-2.1/dd52fa71e414a3688a96ea1abbfa9afd/jetified-DynamicSizes-1.0/AndroidManifest.xml" />
+      <root url="jar://$PROJECT_DIR$/../mydd/caches/transforms-3/0e332f354d69dd720a437c26b5f13341/transformed/jetified-DynamicSizes-1.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../mydd/caches/transforms-3/0e332f354d69dd720a437c26b5f13341/transformed/jetified-DynamicSizes-1.0/AndroidManifest.xml" />
+      <root url="file://$PROJECT_DIR$/../mydd/caches/transforms-3/0e332f354d69dd720a437c26b5f13341/transformed/jetified-DynamicSizes-1.0/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

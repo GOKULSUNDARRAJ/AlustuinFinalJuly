@@ -4,11 +4,13 @@ package com.gokulsundar4545.connectwithpeople;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gokulsundar4545.connectwithpeople.Model.User;
@@ -28,23 +30,26 @@ import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class EditUserProfile extends AppCompatActivity {
 
-    EditText Name,Professional;
+    com.google.android.material.textfield.TextInputEditText Name,Professional,Bio,gender1;
 
 
     ImageView back;
     de.hdodenhof.circleimageview.CircleImageView Profiliamge;
-    ImageView Update;
+    TextView Update;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_user_profile);
-
-        Name=findViewById(R.id.email);
-        Professional=findViewById(R.id.password);
+        setStatusBarColor(getResources().getColor(android.R.color.white));
+        Name=findViewById(R.id.email1);
+        Professional=findViewById(R.id.email2);
         back=findViewById(R.id.back);
+        Bio=findViewById(R.id.email3);
+        gender1=findViewById(R.id.email4);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,20 +63,79 @@ public class EditUserProfile extends AppCompatActivity {
 
         Profiliamge=findViewById(R.id.profile_image);
         Update=findViewById(R.id.login);
+
         Update.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                String Email=Name.getText().toString();
-                String Password=Professional.getText().toString();
+            public void onClick(View view) {
+                // Get the current user’s ID from Firebase Authentication
+                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                if (Email.isEmpty() && Password.isEmpty()){
-                    Toast.makeText(EditUserProfile.this, "Field can't be Empty", Toast.LENGTH_SHORT).show();
-                }else{
+                // Get the values from the EditText fields
+                String name1 = Name.getText().toString();
+                String bio1 = Bio.getText().toString();
+                String gender = gender1.getText().toString();
+                String links1 = Professional.getText().toString();
 
-                    UpdateUserProfile(Email,Password);
-                }
+                // Create a Map to hold the updated values
+                Map<String, Object> userUpdates = new HashMap<>();
+                userUpdates.put("name", name1);
+                userUpdates.put("bio", bio1);
+                userUpdates.put("gender", gender);
+                userUpdates.put("links", links1);
+
+                // Get a reference to the user's node in the Firebase Realtime Database
+                DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+
+                // Update the user's data in Firebase Realtime Database
+                userRef.updateChildren(userUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            // Data updated successfully
+                            Toast.makeText(getApplicationContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Failed to update data
+                            Toast.makeText(getApplicationContext(), "Failed to update profile", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         });
+
+
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+
+
+        // Retrieve user data from Firebase Realtime Database
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // Get user data from snapshot
+                    String name1 = dataSnapshot.child("name").getValue(String.class);
+                    String bio1 = dataSnapshot.child("bio").getValue(String.class);
+                    String gender = dataSnapshot.child("gender").getValue(String.class);
+                    String links1 = dataSnapshot.child("links").getValue(String.class);
+
+
+                    Bio.setText(bio1);
+
+                    Professional.setText(links1);
+
+                    gender1.setText(gender);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle possible errors
+                Toast.makeText(EditUserProfile.this, "Failed to load data", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
 
         FirebaseDatabase database;
         FirebaseAuth auth;
@@ -90,6 +154,10 @@ public class EditUserProfile extends AppCompatActivity {
                             .load(user.getProfile_photo())
                             .into(Profiliamge);
 
+                    Name.setText(user.getName());
+
+
+
 
                 }
             }
@@ -103,26 +171,11 @@ public class EditUserProfile extends AppCompatActivity {
 
     }
 
-    private void UpdateUserProfile(String email, String password) {
-        HashMap user=new HashMap();
-        user.put("name",email);
-        user.put("profission",password);
-        FirebaseAuth Auth=FirebaseAuth.getInstance();
-        FirebaseUser CurrentUser=Auth.getCurrentUser();
 
-
-        DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference("Users");
-        databaseReference.child(CurrentUser.getUid()).updateChildren(user).addOnCompleteListener(new OnCompleteListener() {
-            @Override
-            public void onComplete(@NonNull @NotNull Task task) {
-
-                if(task.isSuccessful()){
-                    Toast.makeText(EditUserProfile.this, "Profile Updated Successful", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(EditUserProfile.this, "Failed", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+    private void setStatusBarColor(int color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            getWindow().setStatusBarColor(color);
+        }
     }
-
 }

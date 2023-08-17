@@ -6,126 +6,61 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/username"
-        android:layout_marginLeft="60dp"
-        android:text="User Name"
-        android:textColor="@color/black"
-        android:textStyle="italic"
-        android:textSize="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        ></TextView>
-    <ImageView
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginLeft="330dp"
-        android:id="@+id/back"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/cr"></ImageView>
-
-    <ImageView
-        android:id="@+id/cameraser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="12dp"
-        android:src="@drawable/ic_baseline_arrow_back_24"></ImageView>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Message"
-        android:layout_marginLeft="20dp"
-        android:id="@+id/message"
-        android:textSize="15dp"
-        android:textStyle="bold"
-        android:layout_marginTop="110dp"
-        ></TextView>
-
-    <TextView
-        android:id="@+id/search123"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Search"
-        android:textColor="@color/blue"
-        android:layout_marginTop="110dp"
-        android:textSize="15dp"
-        android:layout_marginLeft="330dp"
-        ></TextView>
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="370dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="65dp"
-        android:background="@drawable/search"
-        android:layout_marginLeft="10dp"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/Theme.AppCompat.Light">
-
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:src="@drawable/searcha"></ImageView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Search"
-                android:layout_marginLeft="35dp"
-                android:textColor="@color/black"
-                android:layout_centerVertical="true"
-                ></TextView>
-        </RelativeLayout>
-    </androidx.appcompat.widget.Toolbar>
-
-
     <FrameLayout
         android:id="@+id/fram_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="55dp"
         android:background="@drawable/background_transparent"></FrameLayout>
 
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bottamAppBar"
+    <LinearLayout
+        android:id="@+id/cardproduct"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:fabCradleMargin="10dp"
-        app:fabCradleRoundedCornerRadius="10dp"
-        app:fabCradleVerticalOffset="10dp">
+        android:layout_height="55dp"
+        android:layout_gravity="bottom">
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavigationView"
+        <ImageView
+            android:id="@+id/home"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
-            android:background="@drawable/background_transparent"
-            app:menu="@menu/bottom"></com.google.android.material.bottomnavigation.BottomNavigationView>
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="17dp"
+            android:src="@drawable/home1" />
+
+        <ImageView
+            android:id="@+id/user"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/loupe"
+            android:padding="16dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/add"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/more"
+            android:padding="16dp"
+            android:layout_weight="1" />
 
 
-    </com.google.android.material.bottomappbar.BottomAppBar>
+        <ImageView
+            android:id="@+id/reels"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/reel"
+            android:padding="14dp"
+            android:layout_weight="1" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
-        android:src="@drawable/ic_baseline_add_24"
-        app:layout_anchor="@id/bottamAppBar"></com.google.android.material.floatingactionbutton.FloatingActionButton>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/account"
+            android:padding="16dp"
+            android:layout_weight="1" />
 
+
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

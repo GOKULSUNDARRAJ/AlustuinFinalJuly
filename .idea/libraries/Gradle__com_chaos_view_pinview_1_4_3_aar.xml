@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.chaos.view:pinview:1.4.3@aar" external-system-id="GRADLE">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../mydd/caches/transforms-3/3e61456443ef26430ebd52441e4fd8e8/transformed/jetified-pinview-1.4.3/res" />
+      <root url="file://$PROJECT_DIR$/../mydd/caches/transforms-3/3e61456443ef26430ebd52441e4fd8e8/transformed/jetified-pinview-1.4.3/AndroidManifest.xml" />
+      <root url="jar://$PROJECT_DIR$/../mydd/caches/transforms-3/3e61456443ef26430ebd52441e4fd8e8/transformed/jetified-pinview-1.4.3/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../mydd/caches/modules-2/files-2.1/com.chaos.view/pinview/1.4.3/d3fee97a54d3ab7b6b0c54c2f696fa97c8fbe61a/pinview-1.4.3-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../mydd/caches/modules-2/files-2.1/com.chaos.view/pinview/1.4.3/5fd466eac870ee58357ddb58c825ca875953aa73/pinview-1.4.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

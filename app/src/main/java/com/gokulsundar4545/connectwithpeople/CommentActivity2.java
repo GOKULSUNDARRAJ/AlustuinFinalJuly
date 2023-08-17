@@ -78,8 +78,8 @@ public class CommentActivity2 extends AppCompatActivity {
                         .load(post.getPostImg())
                         .into(binding.postImg);
                 binding.description.setText(post.getPostDescription());
-                binding.like.setText(post.getPostLike()+"");
-                binding.comment.setText(post.getCommentCount()+"");
+                binding.like.setText("likes"+post.getPostLike()+"");
+                binding.comment.setText("comments"+post.getCommentCount()+"");
             }
 
             @Override
