@@ -25,7 +25,7 @@
             android:padding="15dp"
             android:background="@drawable/background_right"
             android:text="His message"
-            android:visibility="gone"
+
             ></TextView>
 
             <com.zolad.zoominimageview.ZoomInImageView
@@ -42,35 +42,38 @@
                 android:scaleType="fitXY"
                 tools:ignore="MissingConstraints"></com.zolad.zoominimageview.ZoomInImageView>
 
+        <TextView
+            android:id="@+id/timetv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/messagetv"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="14dp"
+            android:text=""
+            android:textColor="@color/Accent1"
+            android:textSize="12sp"></TextView>
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/timetv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/rv"
-        android:layout_marginLeft="130dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="67dp"
-        android:layout_toStartOf="@+id/isseentv"
-        android:text="14/2/32 05:56pm"
-        android:textColor="@color/black"
-        android:textSize="12sp"></TextView>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/isseentv"
-        android:gravity="end"
-        android:textColor="@color/blue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/rv"
-        android:layout_marginEnd="10dp"
-        android:layout_alignParentEnd="true"
+
+
+        android:layout_alignStart="@+id/rv"
+        android:layout_marginStart="174dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="end"
+        android:text="delivered"
         android:textAlignment="textEnd"
-        android:text="delivered"></TextView>
-
-
+        android:textColor="@color/blue"></TextView>
 
 
 </RelativeLayout>

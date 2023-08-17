@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:diagonal="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -18,16 +18,17 @@
             android:layout_height="41dp"
             android:layout_marginEnd="8dp"
             android:src="@drawable/cr"
-            app:layout_constraintBottom_toBottomOf="@+id/menu_icon"
-            app:layout_constraintEnd_toStartOf="@+id/menu_icon"
-            app:layout_constraintTop_toTopOf="@+id/menu_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/menuicon"
+            app:layout_constraintEnd_toStartOf="@+id/menuicon"
+            app:layout_constraintTop_toTopOf="@+id/menuicon"
             app:layout_constraintVertical_bias="0.41000003"></ImageView>
 
         <ImageView
-            android:id="@+id/menu_icon"
+            android:id="@+id/menuicon"
             android:layout_width="32dp"
+            android:background="?attr/selectableItemBackground"
             android:layout_height="32dp"
-            android:src="@drawable/ic_baseline_menu_24"
+            android:src="@drawable/menu123"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle=""
@@ -43,7 +44,6 @@
             android:layout_width="24dp"
             android:layout_height="21dp"
             android:src="@drawable/ic_baseline_lock_24"
-            android:text="ffffffffffffff"
 
             android:textStyle="italic"
 
@@ -180,43 +180,18 @@
             android:layout_marginTop="80dp"
             android:background="@drawable/buttons"
             android:gravity="center"
-            android:text="Sahre Profile"
+            android:text="Share Profile"
             android:textAllCaps="false"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
-        <TextView
-            android:id="@+id/textView22"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="64dp"
-            android:text="My Followers"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/cardView2"
-            app:layout_constraintHorizontal_bias="0.562"
-            app:layout_constraintStart_toStartOf="@+id/pro"
-            app:layout_constraintTop_toBottomOf="@+id/textView21" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/friendrv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
         <RelativeLayout
             android:id="@+id/posttitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintTop_toBottomOf="@+id/friendrv">
+            app:layout_constraintTop_toBottomOf="@+id/textView21">
 
             <TextView
                 android:id="@+id/dashboardRv1"
@@ -224,8 +199,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="318dp"
                 android:layout_marginEnd="16dp"
                 android:text="My Post"
                 android:textColor="@color/black"
@@ -238,28 +213,26 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/dashboardRv1"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="-63dp"
                 android:text="                There is no such thing as a perfect person,\n            but someone’s heart can have a perfect intention" />
-        </RelativeLayout>
 
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toBottomOf="@+id/posttitle">
-
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/refresh"
+                android:layout_width="match_parent"
+                android:layout_marginTop="36dp"
+                android:layout_below="@+id/textView8"
+                android:layout_height="627dp">
             <com.cooltechworks.views.shimmer.ShimmerRecyclerView
                 android:id="@+id/dashboardRv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
                 app:shimmer_demo_child_count="10"
-                app:shimmer_demo_layout="@layout/demo_grid"
-
-                />
+                app:shimmer_demo_layout="@layout/demo_grid" />
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
         </RelativeLayout>
+
+
+
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView2"
@@ -289,20 +262,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textStyle="bold"
                     android:textColor="@color/black"
-                    app:layout_constraintBottom_toTopOf="@+id/textView12"
-                    app:layout_constraintEnd_toStartOf="@+id/view12"
-                    app:layout_constraintStart_toStartOf="@+id/textView12" />
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/textView12"
+                    app:layout_constraintHorizontal_bias="0.491"
+                    app:layout_constraintStart_toStartOf="@+id/textView12"
+                    app:layout_constraintTop_toTopOf="@+id/textView12"
+                    app:layout_constraintVertical_bias="0.2" />
 
                 <TextView
                     android:id="@+id/textView12"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="28dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="1dp"
                     android:text="Followers"
+                    android:gravity="bottom"
                     android:textColor="@color/black"
                     android:textSize="16sp"
+                    android:background="?android:attr/selectableItemBackground"
                     app:layout_constraintEnd_toStartOf="@+id/view12"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -326,6 +304,7 @@
                     android:layout_height="30dp"
                     android:layout_marginTop="28dp"
                     android:text="Friends"
+                    android:background="?android:attr/selectableItemBackground"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toStartOf="@+id/view11"
@@ -360,7 +339,7 @@
                     android:id="@+id/textView18"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
+
                     android:textStyle="bold"
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toTopOf="@+id/textView9"
@@ -372,9 +351,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_marginTop="28dp"
-                    android:text="Photos"
+                    android:text="Posts"
                     android:textColor="@color/black"
                     android:textSize="16sp"
+                    android:background="?android:attr/selectableItemBackground"
                     app:layout_constraintEnd_toStartOf="@+id/view10"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/view11"
@@ -394,15 +374,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="                Work it, make it, do it, \nmakes us: harder, better, faster, stronger."
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
 
 
@@ -436,4 +407,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

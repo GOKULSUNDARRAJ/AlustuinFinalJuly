@@ -26,8 +26,11 @@ import com.gokulsundar4545.connectwithpeople.CommentActivity;
 import com.gokulsundar4545.connectwithpeople.Model.Notification;
 import com.gokulsundar4545.connectwithpeople.Model.Post;
 import com.gokulsundar4545.connectwithpeople.Model.User;
+import com.gokulsundar4545.connectwithpeople.MyPostActivity;
 import com.gokulsundar4545.connectwithpeople.R;
-import com.gokulsundar4545.connectwithpeople.databinding.DashboardRvBinding;
+
+
+import com.gokulsundar4545.connectwithpeople.databinding.PostdashboardBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -79,7 +82,7 @@ public class MypostAdapter extends RecyclerView.Adapter<MypostAdapter.viewHolder
             @Override
             public void onClick(View v) {
 
-                Intent intent=new Intent(context, ZoomActivity.class);
+                Intent intent=new Intent(context, MyPostActivity.class);
                 intent.putExtra("postId",model.getPostId());
                 intent.putExtra("postedBy",model.getPostedBy());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -108,11 +111,11 @@ public class MypostAdapter extends RecyclerView.Adapter<MypostAdapter.viewHolder
     public class viewHolder extends RecyclerView.ViewHolder {
 
 
-        DashboardRvBinding binding;
+        PostdashboardBinding binding;
         public viewHolder(@NonNull  View itemView) {
             super(itemView);
 
-            binding= DashboardRvBinding.bind(itemView);
+            binding= PostdashboardBinding.bind(itemView);
 
 
         }

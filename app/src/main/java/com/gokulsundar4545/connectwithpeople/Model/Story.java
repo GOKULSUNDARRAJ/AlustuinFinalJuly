@@ -8,7 +8,35 @@ public class Story {
     private long storyAt;
     ArrayList<UserStories> stories;
 
+    private String statusCaption;
+    private long timestart;
+    private long timeend;
+
     public Story() {
+    }
+
+    public long getTimestart() {
+        return timestart;
+    }
+
+    public void setTimestart(long timestart) {
+        this.timestart = timestart;
+    }
+
+    public long getTimeend() {
+        return timeend;
+    }
+
+    public void setTimeend(long timeend) {
+        this.timeend = timeend;
+    }
+
+    public String getStatusCaption() {
+        return statusCaption;
+    }
+
+    public void setStatusCaption(String statusCaption) {
+        this.statusCaption = statusCaption;
     }
 
     public String getStoryBy() {

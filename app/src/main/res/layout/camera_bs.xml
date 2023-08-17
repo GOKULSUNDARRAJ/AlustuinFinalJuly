@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@drawable/dia_bg"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:id="@+id/googlepayLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        >
+
+
+        <TextView
+            android:id="@+id/open_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="sans-serif"
+            android:text="open camera"
+            android:textStyle="italic|bold"></TextView>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/phonepayLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="8dp"
+        >
+
+
+
+        <TextView
+            android:id="@+id/open_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textStyle="bold|italic"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="sans-serif"
+            android:text="open gallery"></TextView>
+
+    </LinearLayout>
+
+</LinearLayout>

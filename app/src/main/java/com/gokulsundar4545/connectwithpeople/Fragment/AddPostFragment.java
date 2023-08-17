@@ -27,7 +27,6 @@ import com.gokulsundar4545.connectwithpeople.Model.Post;
 import com.gokulsundar4545.connectwithpeople.Model.User;
 import com.gokulsundar4545.connectwithpeople.Model.VedioMode;
 import com.gokulsundar4545.connectwithpeople.R;
-
 import com.gokulsundar4545.connectwithpeople.databinding.FragmentAddBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,7 +54,6 @@ public class AddPostFragment extends Fragment {
     FirebaseDatabase database;
     FirebaseStorage Storage;
 
-    ProgressDialog progressDialog;
 
 
     public static final  int PICK_VEDIO=1;
@@ -95,7 +93,7 @@ public class AddPostFragment extends Fragment {
         auth=FirebaseAuth.getInstance();
         database=FirebaseDatabase.getInstance();
         Storage=FirebaseStorage.getInstance();
-        progressDialog=new ProgressDialog(getContext());
+
     }
 
     @Override
@@ -116,10 +114,15 @@ public class AddPostFragment extends Fragment {
             public void onClick(View view) {
 
 
-                Intent intent=new Intent();
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                intent.setType("video/*");
-                startActivityForResult(intent,PICK_VEDIO);
+                try{
+                    Intent intent=new Intent();
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    intent.setType("video/*");
+                    startActivityForResult(intent,PICK_VEDIO);
+                }catch (Exception e){
+
+                }
+
             }
         });
 
@@ -135,11 +138,7 @@ public class AddPostFragment extends Fragment {
          });
 
 
-        progressDialog.setProgressStyle(progressDialog.STYLE_SPINNER);
-        progressDialog.setTitle("Post Uploading");
-        progressDialog.setMessage("Please Wait....");
-        progressDialog.setCancelable(false);
-        progressDialog.setCanceledOnTouchOutside(true);
+
         database.getReference().child("Users")
                 .child(FirebaseAuth.getInstance().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -149,6 +148,7 @@ public class AddPostFragment extends Fragment {
                     User user=snapshot.getValue(User.class);
                     Picasso.get()
                             .load(user.getProfile_photo())
+                            .placeholder(R.drawable.profile)
                             .into(binding.profileImage);
                     binding.name.setText(user.getName());
                     binding.profession.setText(user.getProfission());
@@ -179,39 +179,6 @@ public class AddPostFragment extends Fragment {
 
 
 
-        binding.postdescription.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String description=binding.postdescription.getText().toString();
-                if (!description.isEmpty()){
-                    binding.postbtn.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.btn_input_bg));
-                    binding.postbtn.setTextColor(getContext().getResources().getColor(R.color.white));
-                    binding.postbtn.setEnabled(true);
-                    binding.vediobtn.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.btn_input_bg));
-                    binding.vediobtn.setTextColor(getContext().getResources().getColor(R.color.white));
-                    binding.vediobtn.setEnabled(true);
-                }else {
-                    binding.postbtn.setBackgroundDrawable(ContextCompat.getDrawable(getContext(),R.drawable.active_input_bg));
-                    binding.postbtn.setTextColor(getContext().getResources().getColor(R.color.black));
-                    binding.postbtn.setEnabled(false);
-                    binding.vediobtn.setBackgroundDrawable(ContextCompat.getDrawable(getContext(),R.drawable.active_input_bg));
-                    binding.vediobtn.setTextColor(getContext().getResources().getColor(R.color.black));
-                    binding.vediobtn.setEnabled(false);
-                }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
 
         binding.addimage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -228,13 +195,12 @@ public class AddPostFragment extends Fragment {
     private void UploadVedio() {
 
 
-        progressDialog.setProgressStyle(progressDialog.STYLE_SPINNER);
-        progressDialog.setTitle("Reels Uploading");
-        progressDialog.setMessage("Please Wait....");
-        progressDialog.setCancelable(false);
-        progressDialog.setCanceledOnTouchOutside(true);
 
-        progressDialog.show();
+
+
+
+
+        binding.progress.setVisibility(View.VISIBLE);
 
         String vedioname=binding.postdescription.getText().toString().trim();
 
@@ -265,9 +231,7 @@ public class AddPostFragment extends Fragment {
                                 public void onSuccess(Void unused) {
 
 
-                                    progressDialog.dismiss();
-                                    binding.vediobtn.setBackgroundDrawable(ContextCompat.getDrawable(getContext(),R.drawable.btn_input_ww));
-                                    binding.vediobtn.setTextColor(getContext().getResources().getColor(R.color.white));
+                                    binding.progress.setVisibility(View.GONE);
                                     binding.vediobtn.setEnabled(false);
                                     Toast.makeText(getContext(), "Vedio Posted Successfully", Toast.LENGTH_SHORT).show();
                                     VedioViewFragment pf=new VedioViewFragment();
@@ -284,7 +248,7 @@ public class AddPostFragment extends Fragment {
     }
 
     private void UploadPost(){
-        progressDialog.show();
+        binding.progress.setVisibility(View.VISIBLE);
         final StorageReference reference=Storage.getReference().child("posts")
                 .child(FirebaseAuth.getInstance().getUid())
                 .child(new Date().getTime()+"");
@@ -309,9 +273,7 @@ public class AddPostFragment extends Fragment {
                             @Override
                             public void onSuccess(Void unused) {
 
-                                progressDialog.dismiss();
-                                binding.postbtn.setBackgroundDrawable(ContextCompat.getDrawable(getContext(),R.drawable.btn_input_ww));
-                                binding.postbtn.setTextColor(getContext().getResources().getColor(R.color.white));
+                                binding.progress.setVisibility(View.GONE);
                                 binding.postbtn.setEnabled(false);
 
                                 Toast.makeText(getContext(), "Posted Successfully", Toast.LENGTH_SHORT).show();
@@ -331,27 +293,45 @@ public class AddPostFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (data.getData()!=null){
-            uri=data.getData();
-            binding.postimage.setImageURI(uri);
-            binding.postbtn.setBackgroundDrawable(ContextCompat.getDrawable(getContext(),R.drawable.btn_input_bg));
-            binding.postbtn.setTextColor(getContext().getResources().getColor(R.color.white));
-            binding.postbtn.setEnabled(true);
-        }else {
+        try {
+
+
+            if (requestCode==PICK_VEDIO){
+
+                if (requestCode==PICK_VEDIO || requestCode==RESULT_OK ||
+                        data!=null || data.getData() !=null){
+                    VedioUri=data.getData();
+                    binding.postvedio.setVideoURI(VedioUri);
+                    binding.vediobtn.setVisibility(View.VISIBLE);
+                    binding.vediobtn.setEnabled(true);
+
+
+
+                }else {
+
+                    binding.vediobtn.setVisibility(View.GONE);
+                }
+
+
+
+            }else{
+
+                if (data.getData()!=null){
+                    uri=data.getData();
+                    binding.postimage.setImageURI(uri);
+                    binding.postbtn.setVisibility(View.VISIBLE);
+                    binding.postbtn.setEnabled(true);
+                }else {
+
+                    binding.postbtn.setVisibility(View.GONE);
+                    binding.postbtn.setEnabled(false);
+                }
+            }
+
+        }catch (Exception e){
 
         }
 
-        if (requestCode==PICK_VEDIO || requestCode==RESULT_OK ||
-                    data!=null || data.getData() !=null){
-                VedioUri=data.getData();
-                binding.postvedio.setVideoURI(VedioUri);
-                binding.vediobtn.setBackgroundDrawable(ContextCompat.getDrawable(getContext(),R.drawable.btn_input_bg));
-                binding.vediobtn.setTextColor(getContext().getResources().getColor(R.color.white));
-                binding.vediobtn.setEnabled(true);
-
-
-
-            }
 
     }
 }

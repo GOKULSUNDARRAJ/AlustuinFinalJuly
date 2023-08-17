@@ -1,5 +1,6 @@
 package com.gokulsundar4545.connectwithpeople.Fragment;
 
+import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +8,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -19,11 +22,15 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.SeekBar;
 
+import com.gokulsundar4545.connectwithpeople.Adapter.PostAdapter;
+import com.gokulsundar4545.connectwithpeople.Adapter.SearchPostAdapter;
 import com.gokulsundar4545.connectwithpeople.Adapter.UserAdapter;
 import com.gokulsundar4545.connectwithpeople.LoginActivity;
 import com.gokulsundar4545.connectwithpeople.MainActivity;
+import com.gokulsundar4545.connectwithpeople.Model.Post;
 import com.gokulsundar4545.connectwithpeople.Model.User;
 import com.gokulsundar4545.connectwithpeople.R;
+
 import com.gokulsundar4545.connectwithpeople.databinding.FragmentSearchBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -41,6 +48,8 @@ public class SearchFragment extends Fragment {
     FirebaseDatabase database;
     private SearchView searchView;
     UserAdapter adapter;
+
+    ArrayList<Post> dashboardlist;
 
     public SearchFragment() {
 
@@ -62,14 +71,14 @@ public class SearchFragment extends Fragment {
 
         binding=FragmentSearchBinding.inflate(inflater, container, false);
 
-        binding.userRv.showShimmerAdapter();
+
 
         adapter=new UserAdapter(getContext(),list,false);
         LinearLayoutManager layoutManager=new LinearLayoutManager(getContext());
         binding.userRv.setLayoutManager(layoutManager);
 
 
-        getAllUser();
+        dashboardlist = new ArrayList<>();
 
 
         return binding.getRoot();
@@ -92,7 +101,7 @@ public class SearchFragment extends Fragment {
 
 
                 }
-                binding.userRv.hideShimmerAdapter();
+
                 binding.userRv.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }
@@ -106,6 +115,7 @@ public class SearchFragment extends Fragment {
 
 
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onCreateOptionsMenu(Menu menu,MenuInflater menuInflater) {
         menuInflater.inflate(R.menu.menu_item, menu);
@@ -116,9 +126,14 @@ public class SearchFragment extends Fragment {
                 = (androidx.appcompat.widget.SearchView) item.getActionView();
         searchView.setQueryHint(getResources().getString(
                 R.string.search_title));
+        searchView.clearFocus();
+
+        searchView.setBackgroundColor(R.color.Accent1);
 
         SearchManager searchManager = (SearchManager) getActivity()
                 .getSystemService(getActivity().SEARCH_SERVICE);
+
+
 
         searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
             @Override
@@ -151,6 +166,63 @@ public class SearchFragment extends Fragment {
         });
 
 
+        SearchPostAdapter dashboardAdapter = new SearchPostAdapter(dashboardlist, getContext());
+        GridLayoutManager gridLayoutManager=new GridLayoutManager(getContext(),3);
+        binding.userRv.setLayoutManager(gridLayoutManager);
+        binding.userRv.setNestedScrollingEnabled(false);
+
+
+        database.getReference().child("posts").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dashboardlist.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Post post = dataSnapshot.getValue(Post.class);
+                    post.setPostId(dataSnapshot.getKey());
+                    dashboardlist.add(post);
+                }
+                binding.userRv.setAdapter(dashboardAdapter);
+                dashboardAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        binding.swapble.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener( ) {
+            @Override
+            public void onRefresh() {
+                database.getReference().child("posts").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        dashboardlist.clear();
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            Post post = dataSnapshot.getValue(Post.class);
+                            post.setPostId(dataSnapshot.getKey());
+                            dashboardlist.add(post);
+                        }
+                        binding.userRv.setAdapter(dashboardAdapter);
+                        dashboardAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+                binding.swapble.setRefreshing(false);
+
+            }
+        });
+
+
+
+
+
+
+
     }
 
     private void SearchUsers(String query) {
@@ -164,8 +236,7 @@ public class SearchFragment extends Fragment {
                     user.setUserID(datasnapshot.getKey());
 
                     if (!datasnapshot.getKey().equals(FirebaseAuth.getInstance().getUid())){
-                        if (user.getName().toLowerCase().contains(query.toLowerCase()) ||
-                         user.getDepartment().toLowerCase().contains(query.toLowerCase())){
+                        if (user.getName().toLowerCase().contains(query.toLowerCase()) ){
                             list.add(user);
                         }
 
@@ -174,7 +245,7 @@ public class SearchFragment extends Fragment {
 
 
                 }
-                binding.userRv.hideShimmerAdapter();
+
                 adapter.notifyDataSetChanged();
                 binding.userRv.setAdapter(adapter);
 
@@ -185,6 +256,8 @@ public class SearchFragment extends Fragment {
 
             }
         });
+
+
     }
 
 

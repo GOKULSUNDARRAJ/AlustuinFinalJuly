@@ -18,8 +18,8 @@
 
 
     <item
-        android:title=""
-        android:enabled="false"
+        android:title="Post"
+        android:icon="@drawable/ic_baseline_add_circle_outline_24"
         android:id="@+id/add"
         ></item>
 

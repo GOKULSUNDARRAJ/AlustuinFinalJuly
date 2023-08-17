@@ -2,23 +2,26 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="100dp"
     android:id="@+id/ChatLayout"
     android:layout_marginTop="7dp"
     android:layout_margin="5dp"
-    android:layout_height="70dp">
+    android:layout_height="150dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/online"
         android:layout_width="15dp"
         android:layout_height="15dp"
-        android:src="@drawable/green"
+        android:src="@drawable/ic_baseline_check_circle_24"
+        android:visibility="gone"
         app:civ_border_width="1dp"
-
         app:layout_constraintBottom_toBottomOf="@+id/profile_image"
         app:layout_constraintEnd_toEndOf="@+id/profile_image"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/profile_image"></de.hdodenhof.circleimageview.CircleImageView>
+
+
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/offline"
         android:layout_width="15dp"
@@ -32,28 +35,15 @@
         app:layout_constraintStart_toStartOf="@+id/profile_image"></de.hdodenhof.circleimageview.CircleImageView>
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
-        android:layout_width="@dimen/_40mdp"
-        android:layout_height="@dimen/_40mdp"
+        android:layout_width="@dimen/_44mdp"
+        android:layout_height="@dimen/_42mdp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
         android:padding="4dp"
-        app:civ_border_width="1dp"
-        app:civ_border_color="@color/Accent"
-        android:scaleType="centerCrop"
         android:src="@drawable/profile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/profile_image"
-        app:layout_constraintEnd_toEndOf="@+id/profile_image"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/profile_image"
-        app:layout_constraintTop_toTopOf="@+id/profile_image"
-        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/name"
@@ -61,22 +51,20 @@
         android:layout_height="wrap_content"
         android:text="User Name"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/profession"
-        app:layout_constraintEnd_toStartOf="@+id/followbtn"
-        app:layout_constraintHorizontal_bias="0.027"
-        app:layout_constraintStart_toEndOf="@+id/profile_image"
-        app:layout_constraintTop_toTopOf="@id/profile_image"
-        app:layout_constraintVertical_chainStyle="packed" />
+
+        app:layout_constraintEnd_toEndOf="@+id/profile_image"
+        app:layout_constraintStart_toStartOf="@+id/profile_image"
+        app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
     <TextView
         android:id="@+id/profession"
-        android:layout_width="200dp"
-        android:layout_height="13dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:textColor="@color/black"
         android:textSize="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_image"
-        app:layout_constraintEnd_toStartOf="@+id/followbtn"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toEndOf="@+id/name"
+        app:layout_constraintHorizontal_bias="0.72"
         app:layout_constraintStart_toStartOf="@+id/name"
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
@@ -84,15 +72,14 @@
         android:id="@+id/followbtn"
         android:layout_width="80dp"
         android:layout_height="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="28dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/follow"
         android:text="Follow"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/profile_image"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toEndOf="@+id/profile_image"
+        app:layout_constraintHorizontal_bias="0.26"
+        app:layout_constraintStart_toStartOf="@+id/profile_image"
+        app:layout_constraintTop_toBottomOf="@+id/profession" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

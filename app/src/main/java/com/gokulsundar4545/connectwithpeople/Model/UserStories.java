@@ -4,13 +4,27 @@ public class UserStories {
 
     private String image;
     private long storyAt;
+    private String statusCaption;
 
     public UserStories() {
     }
 
-    public UserStories(String image, long storyAt) {
+    public UserStories(String statusCaption) {
+        this.statusCaption = statusCaption;
+    }
+
+    public String getStatusCaption() {
+        return statusCaption;
+    }
+
+    public void setStatusCaption(String statusCaption) {
+        this.statusCaption = statusCaption;
+    }
+
+    public UserStories(String image, long storyAt, String statusCaption) {
         this.image = image;
         this.storyAt = storyAt;
+        this.statusCaption = statusCaption;
     }
 
     public String getImage() {

@@ -14,6 +14,20 @@
     <color name="yellow">#ECDE4B</color>
     <color name="blue">#0048FF</color>
     <color name="rose">#E8F41A68</color>
+    <color name="voilet">#fdf0ff</color>
+    <color name="orange">#FBDCD2</color>
+    <color name="yellow1">#FAF5C4</color>
+
+    <color name="y">#FAF5C4</color>
+    <color name="o">#FBDCD2</color>
+    <color name="v">#D2C1F8</color>
+
+
+
+    <color name="voilet1">#A17BF4</color>
+    <color name="voilet2">#D2C1F8</color>
+    <color name="voilet3">#E5DCF8</color>
+    <color name="voilet4">#EFEBF6</color>
 
     <color name="as">#E8EDEBEC</color>
 
@@ -22,6 +36,8 @@
 
     <color name="colorPrimary">#222A35</color>
     <color name="colorPrimaryDark">#222A35</color>
+    <color name="pri1">#34495E</color>
+    <color name="pri2">#85929E</color>
     <color name="colorAccent">#222A35</color>
 
     <color name="black_shade">#333333</color>

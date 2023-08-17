@@ -31,8 +31,11 @@ import com.gokulsundar4545.connectwithpeople.CommentActivity;
 import com.gokulsundar4545.connectwithpeople.Model.Notification;
 import com.gokulsundar4545.connectwithpeople.Model.Post;
 import com.gokulsundar4545.connectwithpeople.Model.User;
+import com.gokulsundar4545.connectwithpeople.PostLikedByActivity;
 import com.gokulsundar4545.connectwithpeople.R;
 
+import com.gokulsundar4545.connectwithpeople.StartActivity;
+import com.gokulsundar4545.connectwithpeople.ThereProfileActivity;
 
 import com.gokulsundar4545.connectwithpeople.databinding.DashboardRvBinding;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -81,15 +84,18 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
 
         holder.binding.like.setText(model.getPostLike()+"");
         holder.binding.comment.setText(model.getCommentCount()+"");
-        holder.binding.description.setText(model.getPostDescription());
+        holder.binding.textView6.setText("View All"+" "+model.getCommentCount()+" "+"Comments");
+        holder.binding.description.setText("# "+model.getPostDescription()+" ");
+        holder.binding.likedby.setText("likes"+" "+model.getPostLike()+"");
 
+        String pId=model.getPostId();
 
         holder.binding.menubar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Dialog dialog=new Dialog(context);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.deleteoption);
+                dialog.setContentView(R.layout.deleteoption1);
 
                 LinearLayout shareoption=dialog.findViewById(R.id.deleteLayout);
                 shareoption.setOnClickListener(new View.OnClickListener() {
@@ -116,48 +122,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
         });
 
 
-        holder.binding.menubar.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                holder.binding.post.setBackgroundColor(Color.DKGRAY);
-                AlertDialog.Builder builder=new AlertDialog.Builder(context);
-                builder.setTitle("Delete");
-                builder.setMessage("Do you want to delete the Post?");
-                builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                        FirebaseDatabase.getInstance().getReference()
-                                .child("posts")
-                                .child(model.getPostedBy())
-                                .child(model.getPostId())
-                                .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-
-                                Toast.makeText(context, "Post Deleted", Toast.LENGTH_SHORT).show();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull  Exception e) {
-
-                                Toast.makeText(context, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                });
-                builder.setNegativeButton("Cancle", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        holder.binding.post.setBackgroundColor(Color.WHITE);
-                        dialogInterface.dismiss();
-                    }
-                });
-                builder.create().show();
-                return true;
-            }
-        });
-
         holder.binding.comment.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -171,19 +135,50 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
             }
         });
 
-        holder.binding.postimage.setOnClickListener(new View.OnClickListener() {
+        holder.binding.textView6.setOnClickListener(new View.OnClickListener( ) {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context, CommentActivity.class);
+                intent.putExtra("postId",model.getPostId());
+                intent.putExtra("postedBy",model.getPostedBy());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Bundle b= ActivityOptions.makeSceneTransitionAnimation((Activity) context).toBundle();
+                context.startActivity(intent,b);
+            }
+        });
+
+        holder.binding.likedby.setOnClickListener(new View.OnClickListener( ) {
             @Override
             public void onClick(View v) {
 
+                Intent intent=new Intent( context, PostLikedByActivity.class);
+                intent.putExtra("postId",pId);
+                context.startActivity(intent);
+            }
+        });
+
+        holder.binding.profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context, ThereProfileActivity.class);
+                intent.putExtra("uid",model.getPostedBy());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+
+
+            }
+        });
+
+        holder.binding.postimage.setOnClickListener(new View.OnClickListener( ) {
+            @Override
+            public void onClick(View v) {
                 Intent intent=new Intent(context, ZoomActivity.class);
                 intent.putExtra("postId",model.getPostId());
                 intent.putExtra("postedBy",model.getPostedBy());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
-
             }
         });
-
 
 
         holder.binding.share.setOnClickListener(new View.OnClickListener() {
@@ -222,6 +217,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
             }
         });
 
+
+
         FirebaseDatabase.getInstance().getReference()
                 .child("posts")
                 .child(model.getPostId())
@@ -232,7 +229,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
                     public void onDataChange(@NonNull  DataSnapshot snapshot) {
 
                         if (snapshot.exists()){
-                            holder.binding.like.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_thumb_up_25,0,0,0);
+                            holder.binding.like.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_favorite_24,0,0,0);
                         }else {
                             holder.binding.like.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -253,71 +250,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
                                                     .setValue(model.getPostLike()+1).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void unused) {
-                                                    holder.binding.like.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_thumb_up_25,0,0,0);
-
-                                                    Notification notification=new Notification();
-                                                    notification.setNotificationBy(FirebaseAuth.getInstance().getUid());
-                                                    notification.setNotificationAt(new Date().getTime());
-                                                    notification.setPostId(model.getPostId());
-                                                    notification.setPostBy(model.getPostedBy());
-                                                    notification.setType("like");
-
-                                                    FirebaseDatabase.getInstance().getReference()
-                                                            .child("notification")
-                                                            .child(model.getPostedBy())
-                                                            .push()
-                                                            .setValue(notification);
-                                                }
-                                            });
-
-                                        }
-                                    });
-
-                                }
-                            });
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull  DatabaseError error) {
-
-                    }
-                });
-
-
-
-        FirebaseDatabase.getInstance().getReference()
-                .child("posts")
-                .child(model.getPostId())
-                .child("likes")
-                .child(FirebaseAuth.getInstance().getUid())
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull  DataSnapshot snapshot) {
-
-                        if (snapshot.exists()){
-                            holder.binding.like.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_thumb_up_25,0,0,0);
-                        }else {
-                            holder.binding.postimage.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-
-                                    FirebaseDatabase.getInstance().getReference()
-                                            .child("posts")
-                                            .child(model.getPostId())
-                                            .child("likes")
-                                            .child(FirebaseAuth.getInstance().getUid())
-                                            .setValue(true).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
-                                            FirebaseDatabase.getInstance().getReference()
-                                                    .child("posts")
-                                                    .child(model.getPostId())
-                                                    .child("postLike")
-                                                    .setValue(model.getPostLike()+1).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void unused) {
-                                                    holder.binding.like.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_thumb_up_25,0,0,0);
+                                                    holder.binding.like.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_favorite_24,0,0,0);
 
                                                     Notification notification=new Notification();
                                                     notification.setNotificationBy(FirebaseAuth.getInstance().getUid());

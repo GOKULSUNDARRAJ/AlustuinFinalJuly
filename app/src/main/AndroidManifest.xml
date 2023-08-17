@@ -2,10 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gokulsundar4545.connectwithpeople">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.sec.android.provider.badge.permission.READ" />
+    <uses-permission android:name="com.sec.android.provider.badge.permission.WRITE" />
 
     <application
         android:allowBackup="true"
@@ -14,8 +24,28 @@
         android:roundIcon="@mipmap/logo1"
         android:supportsRtl="true"
         android:theme="@style/Theme.ConnectWithpeople">
-        <activity android:name=".Adapter.VedioComment"></activity>
-        <activity android:name=".MainActivity2"></activity>
+        <activity android:name=".ClickTherePostActivity" />
+        <activity android:name=".login" />
+        <activity android:name=".ThereProfileActivity" />
+        <activity android:name=".PostLikedByActivity" />
+        <activity android:name=".ForgetPassword" />
+        <activity android:name=".Professional" />
+        <activity android:name=".Password" />
+        <activity android:name=".EmailActivity" />
+        <activity android:name=".SignUp" />
+        <activity android:name=".SignUp2nd" />
+        <activity android:name=".SignUp3nd" />
+        <activity android:name=".VerifyOTP" />
+        <activity android:name=".NameActivity" />
+        <activity android:name=".StartActivityFirst" />
+        <activity android:name=".StartActivity" />
+        <activity android:name=".ShowStatus" />
+        <activity android:name=".MyPostActivity" />
+        <activity android:name=".StoryActivity" />
+        <activity android:name=".Fragment.ImageActivity" />
+        <activity android:name=".Fragment.UploadImage" />
+        <activity android:name=".Adapter.VedioComment" />
+        <activity android:name=".MainActivity2" />
         <activity android:name=".EditUserProfile" />
         <activity android:name=".CommentActivity2" />
         <activity android:name=".Adapter.ZoomActivity" />
@@ -72,6 +102,16 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/black" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.gokulsundar4545.connectwithpeople.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path" />
+        </provider>
     </application>
 
 </manifest>

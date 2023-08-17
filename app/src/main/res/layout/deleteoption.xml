@@ -18,12 +18,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="serif"
         android:text="Choose Option"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="25dp"
-        android:textStyle="bold|italic"></TextView>
+        android:textStyle="bold"></TextView>
 
     <LinearLayout
         android:id="@+id/deleteLayout"
@@ -50,6 +49,36 @@
             android:layout_marginLeft="10dp"
             android:fontFamily="sans-serif"
             android:text="Share Post"
+            android:textStyle="italic|bold"></TextView>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/deleteLayou1"
+        android:layout_width="match_parent"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        >
+
+        <ImageView
+            android:id="@+id/google1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_baseline_delete_24"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="sans-serif"
+            android:text="Delete Post"
             android:textStyle="italic|bold"></TextView>
 
     </LinearLayout>

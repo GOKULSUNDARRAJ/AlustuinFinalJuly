@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,6 +39,9 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.view
     public viewHolder onCreateViewHolder(@NonNull  ViewGroup parent, int viewType) {
 
         View view= LayoutInflater.from(context).inflate(R.layout.friend_rv_sample,parent,false);
+
+
+
         return new viewHolder(view);
 
 
@@ -50,6 +54,14 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.view
 
         Follow model=list.get(position);
 
+
+        holder.binding.camera.setOnClickListener(new View.OnClickListener( ) {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "Camera", Toast.LENGTH_SHORT).show( );
+            }
+        });
+
         FirebaseDatabase.getInstance().getReference()
                 .child("Users")
                 .child(model.getFollowedBy()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -58,8 +70,11 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.view
                 User user=snapshot.getValue(User.class);
                 Picasso.get()
                         .load(user.getProfile_photo())
+                        .placeholder(R.drawable.profile)
                         .into(holder.binding.profileImage);
-                holder.binding.followname.setText(user.getName());
+                holder.binding.name.setText(user.getName());
+                holder.binding.profession.setText(user.getProfission());
+
 
             }
 

@@ -31,7 +31,7 @@ import java.util.HashMap;
 
 public class EditUserProfile extends AppCompatActivity {
 
-    EditText Name,Professional;
+    EditText Name,Professional,Bio,gender1;
 
 
     ImageView back;
@@ -45,6 +45,8 @@ public class EditUserProfile extends AppCompatActivity {
         Name=findViewById(R.id.email);
         Professional=findViewById(R.id.password);
         back=findViewById(R.id.back);
+        Bio=findViewById(R.id.bio1);
+        gender1=findViewById(R.id.gen1);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,12 +65,14 @@ public class EditUserProfile extends AppCompatActivity {
             public void onClick(View v) {
                 String Email=Name.getText().toString();
                 String Password=Professional.getText().toString();
+                String bio=Bio.getText().toString();
+                String gender=gender1.getText().toString();
 
-                if (Email.isEmpty() && Password.isEmpty()){
+                if (Email.isEmpty() && Password.isEmpty() && bio.isEmpty() && gender.isEmpty()){
                     Toast.makeText(EditUserProfile.this, "Field can't be Empty", Toast.LENGTH_SHORT).show();
                 }else{
 
-                    UpdateUserProfile(Email,Password);
+                    UpdateUserProfile(Email,Password,bio,gender);
                 }
             }
         });
@@ -103,10 +107,13 @@ public class EditUserProfile extends AppCompatActivity {
 
     }
 
-    private void UpdateUserProfile(String email, String password) {
+    private void UpdateUserProfile(String email, String password,String bio,String gender) {
         HashMap user=new HashMap();
         user.put("name",email);
         user.put("profission",password);
+        user.put("bio",bio);
+        user.put("gender",gender);
+
         FirebaseAuth Auth=FirebaseAuth.getInstance();
         FirebaseUser CurrentUser=Auth.getCurrentUser();
 

@@ -36,8 +36,6 @@ public class VedioViewFragment extends Fragment {
 
 
 
-
-
     }
 
     @Override
@@ -46,8 +44,6 @@ public class VedioViewFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_vedio_view, container, false);
 
         viewPager2=view.findViewById(R.id.vpager);
-
-
 
         FirebaseRecyclerOptions<VedioMode> options =
                 new FirebaseRecyclerOptions.Builder<VedioMode>()
@@ -76,14 +72,13 @@ public class VedioViewFragment extends Fragment {
 
     @Override
     public void onResume() {
-        super.onResume();
+        super.onResume( );
         vedioAdapter.startListening();
     }
 
     @Override
     public void onPause() {
-        super.onPause();
+        super.onPause( );
         vedioAdapter.startListening();
-
     }
 }

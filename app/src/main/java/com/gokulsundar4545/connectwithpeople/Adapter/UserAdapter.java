@@ -115,9 +115,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewHolder> {
 
         Picasso.get()
                 .load(user.getProfile_photo())
+                .placeholder(R.drawable.profile)
                 .into(holder.binding.profileImage);
 
         holder.binding.name.setText(user.getName());
+
 
 
 
@@ -131,7 +133,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewHolder> {
             public void onDataChange(@NonNull  DataSnapshot snapshot) {
 
                 if (snapshot.exists()){
-                    holder.binding.followbtn.setBackgroundDrawable(ContextCompat.getDrawable(context,R.drawable.follow_bg));
+                    holder.binding.followbtn.setBackgroundDrawable(ContextCompat.getDrawable(context,R.drawable.buttons));
                     holder.binding.followbtn.setText("Following");
                     holder.binding.followbtn.setTextColor(context.getResources().getColor(R.color.black));
                     holder.binding.followbtn.setEnabled(false);
@@ -147,7 +149,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewHolder> {
 
                             FirebaseDatabase.getInstance().getReference()
                                     .child("Users")
-                                    .child(user.getUserID())
+                                    .child(user.getUid())
                                     .child("followers")
                                     .child(FirebaseAuth.getInstance().getUid())
                                     .setValue(follow).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -155,7 +157,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewHolder> {
                                 public void onSuccess(Void unused) {
                                     FirebaseDatabase.getInstance().getReference()
                                             .child("Users")
-                                            .child(user.getUserID())
+                                            .child(user.getUid())
                                             .child("followerCount")
                                             .setValue(user.getFollowerCount()+1).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
@@ -169,7 +171,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewHolder> {
 
                                             FirebaseDatabase.getInstance().getReference()
                                                     .child("notification")
-                                                    .child(user.getUserID())
+                                                    .child(user.getUid())
                                                     .push()
                                                     .setValue(notification);
                                         }
@@ -210,7 +212,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewHolder> {
         public viewHolder(@NonNull  View itemView) {
             super(itemView);
 
-            binding=UserSampleBinding.bind(itemView);
+            binding= UserSampleBinding.bind(itemView);
             lastMsg=itemView.findViewById(R.id.profession);
         }
     }

@@ -6,6 +6,9 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -19,7 +22,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.text.TextPaint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -27,25 +32,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.animation.content.Content;
 import com.cooltechworks.views.shimmer.ShimmerAdapter;
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 import com.gokulsundar4545.connectwithpeople.Adapter.PostAdapter;
 import com.gokulsundar4545.connectwithpeople.Adapter.StoryAdapter;
+import com.gokulsundar4545.connectwithpeople.Adapter.StorynewAdapter;
 import com.gokulsundar4545.connectwithpeople.EditUserProfile;
 import com.gokulsundar4545.connectwithpeople.LoginActivity;
 import com.gokulsundar4545.connectwithpeople.Model.Post;
 import com.gokulsundar4545.connectwithpeople.Model.Story;
+import com.gokulsundar4545.connectwithpeople.Model.Storynew;
 import com.gokulsundar4545.connectwithpeople.Model.User;
 import com.gokulsundar4545.connectwithpeople.Model.UserStories;
 import com.gokulsundar4545.connectwithpeople.PayMentActivity;
 import com.gokulsundar4545.connectwithpeople.R;
+import com.gokulsundar4545.connectwithpeople.StartActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -54,8 +68,12 @@ import com.google.firebase.storage.UploadTask;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class HomeFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
@@ -67,10 +85,12 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     static final float END_SCALE = 0.7f;
     LinearLayout content;
 
-    ShimmerRecyclerView dashboardRv, StroyRv;
+    ShimmerRecyclerView dashboardRv,StroyRv;
+
     ArrayList<Story> Storylist;
     FirebaseAuth auth;
     FirebaseDatabase database;
+    SwipeRefreshLayout Refresh;
     FirebaseStorage storage;
 
     ArrayList<Post> dashboardlist;
@@ -78,8 +98,22 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     RoundedImageView addStoryImage;
     ProgressDialog progressDialog;
 
-    ImageView menuIcon1, notification,chat;
-    de.hdodenhof.circleimageview.CircleImageView profile;
+    TextView textView4;
+
+    DatabaseReference NotificationRef;
+
+    String CurrentUser;
+    private int count;
+
+    TextView comment;
+    FirebaseAuth Auth;
+
+    ImageView menuIcon1, notification,chat,star,status;
+    de.hdodenhof.circleimageview.CircleImageView profile,imageView2;
+
+    private RecyclerView recyclerView_story;
+    private StorynewAdapter storyAdapter;
+    private List<Storynew> storynewList;
 
 
     ActivityResultLauncher<String> galleryLauncher;
@@ -95,6 +129,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
 
         progressDialog = new ProgressDialog(getContext());
 
+        Auth=FirebaseAuth.getInstance();
     }
 
     @Override
@@ -110,8 +145,45 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         content = view.findViewById(R.id.content);
         notification = view.findViewById(R.id.notification);
         chat=view.findViewById(R.id.chat);
+        star=view.findViewById(R.id.start);
 
 
+        comment=view.findViewById(R.id.comment);
+        NotificationRef=FirebaseDatabase.getInstance( ).getReference( ).child("notification").child(Auth.getUid());
+        NotificationRef.addValueEventListener(new ValueEventListener( ) {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    count=(int) snapshot.getChildrenCount();
+                    comment.setText(Integer.toString(count));
+
+
+                }else {
+                    comment.setText("0");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+
+        Refresh=view.findViewById(R.id.refresh);
+
+        textView4=view.findViewById(R.id.textView4);
+        imageView2=view.findViewById(R.id.imageView2);
+
+        TextPaint textPaint=textView4.getPaint();
+        float width=textPaint.measureText(getResources().getString(R.string.app_name));
+        Shader shader=new LinearGradient(0,0,width,textView4.getTextSize(),
+                new int[]{
+
+                        Color.parseColor("#5D6D7E"),
+
+                        Color.parseColor("#5D6D7E")
+                },null,Shader.TileMode.CLAMP);
+        textView4.getPaint().setShader(shader);
 
         menuIcon1 = view.findViewById(R.id.menu_icon);
         menuIcon1.setOnClickListener(new View.OnClickListener() {
@@ -129,15 +201,17 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         Nview();
 
         dashboardRv = view.findViewById(R.id.dashboardRv);
-        dashboardRv.showShimmerAdapter();
+
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         storage = FirebaseStorage.getInstance();
 
-        StroyRv = view.findViewById(R.id.storyRV);
-        StroyRv.showShimmerAdapter();
 
+
+
+        StroyRv=view.findViewById(R.id.storyRV);
+        StroyRv.showShimmerAdapter();
 
         Storylist = new ArrayList<>();
 
@@ -147,8 +221,8 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         progressDialog.setCancelable(false);
 
 
-        StoryAdapter adapter = new StoryAdapter(Storylist, getContext());
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        StoryAdapter adapter=new StoryAdapter(Storylist,getContext());
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
         StroyRv.setLayoutManager(linearLayoutManager);
         StroyRv.setNestedScrollingEnabled(false);
 
@@ -156,27 +230,27 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         database.getReference()
                 .child("stories").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            public void onDataChange(@NonNull  DataSnapshot snapshot) {
 
                 Storylist.clear();
-                if (snapshot.exists()) {
-                    for (DataSnapshot storySnapshot : snapshot.getChildren()) {
-                        Story story = new Story();
+                if (snapshot.exists()){
+                    for (DataSnapshot storySnapshot:snapshot.getChildren()){
+                        Story story=new Story();
                         story.setStoryBy(storySnapshot.getKey());
                         story.setStoryAt(storySnapshot.child("postedBy").getValue(Long.class));
 
-                        ArrayList<UserStories> Stories = new ArrayList<>();
+                        ArrayList<UserStories> Stories=new ArrayList<>();
 
-                        for (DataSnapshot Snapshot1 : storySnapshot.child("userStories").getChildren()) {
+                        for (DataSnapshot Snapshot1:storySnapshot.child("userStories").getChildren()){
 
-                            UserStories userStories = Snapshot1.getValue(UserStories.class);
-                            if (userStories != null) {
-                                Log.e("tag", "isDateGreaterThen24Hours(userStories.getStoryAt()): "
+                            UserStories userStories=Snapshot1.getValue(UserStories.class);
+                            if (userStories != null){
+                                Log.e("tag","isDateGreaterThen24Hours(userStories.getStoryAt()): "
                                         + isDateGreaterThen24Hours(userStories.getStoryAt()));
 
-                                if (!isDateGreaterThen24Hours(userStories.getStoryAt())) {
+                                if (!isDateGreaterThen24Hours(userStories.getStoryAt())){
                                     Stories.add(userStories);
-                                } else {
+                                }else {
                                     // Remove record from firebase realtime database login here.
                                 }
                             }
@@ -192,10 +266,12 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onCancelled(@NonNull  DatabaseError error) {
 
             }
         });
+
+
 
 
         database.getReference().child("Users").child(auth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -206,7 +282,13 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
                     User user = snapshot.getValue(User.class);
                     Picasso.get()
                             .load(user.getProfile_photo())
+                            .placeholder(R.drawable.profile)
                             .into(profile);
+                    Picasso.get()
+                            .load(user.getProfile_photo())
+                            .placeholder(R.drawable.profile)
+                            .into(imageView2);
+
 
                 }
             }
@@ -214,6 +296,19 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+
+        status=view.findViewById(R.id.status);
+
+        status.setOnClickListener(new View.OnClickListener( ) {
+            @Override
+            public void onClick(View v) {
+                 Fragment3 pf = new Fragment3();
+
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.fram_layout, pf).commit();
             }
         });
 
@@ -229,6 +324,8 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
 
             }
         });
+
+
 
 
         profile.setOnClickListener(new View.OnClickListener() {
@@ -256,6 +353,19 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             }
         });
 
+        addStoryImage=view.findViewById(R.id.postimage);
+        addStoryImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AddStatus pay = new AddStatus();
+
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.fram_layout, pay).commit();
+
+            }
+        });
+
 
         dashboardlist = new ArrayList<>();
 
@@ -265,9 +375,38 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         layoutManager11.setReverseLayout(true);
         layoutManager11.setStackFromEnd(true);
         dashboardRv.setLayoutManager(layoutManager11);
+        dashboardRv.showShimmerAdapter();
         dashboardRv.setNestedScrollingEnabled(false);
 
+        Refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener( ) {
+            @Override
+            public void onRefresh() {
+                database.getReference().child("posts").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        dashboardlist.clear();
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            Post post = dataSnapshot.getValue(Post.class);
+                            post.setPostId(dataSnapshot.getKey());
+                            dashboardlist.add(post);
+                        }
+                        dashboardRv.setAdapter(dashboardAdapter);
+                        dashboardRv.hideShimmerAdapter();
+                        dashboardAdapter.notifyDataSetChanged();
+                    }
 
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+                Refresh.setRefreshing(false);
+            }
+        });
+
+
+        dashboardRv.showShimmerAdapter();
         database.getReference().child("posts").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -288,72 +427,10 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             }
         });
 
-        addStoryImage = view.findViewById(R.id.postimage);
-        addStoryImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                galleryLauncher.launch("image/*");
-            }
-        });
-
-        galleryLauncher = registerForActivityResult(new ActivityResultContracts.GetContent()
-                , new ActivityResultCallback<Uri>() {
-                    @Override
-                    public void onActivityResult(Uri result) {
-
-                        addStoryImage.setImageURI(result);
-
-                        progressDialog.show();
-                        final StorageReference reference = storage.getReference()
-                                .child("stories")
-                                .child(FirebaseAuth.getInstance().getUid())
-                                .child(new Date().getTime() + "");
-
-                        reference.putFile(result).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        Story story = new Story();
-                                        story.setStoryAt(new Date().getTime());
-
-                                        database.getReference()
-                                                .child("stories")
-                                                .child(FirebaseAuth.getInstance().getUid())
-                                                .child("postedBy")
-                                                .setValue(story.getStoryAt()).addOnSuccessListener(new OnSuccessListener<Void>() {
-
-                                            @Override
-                                            public void onSuccess(Void unused) {
-
-                                                UserStories stories = new UserStories(uri.toString(), story.getStoryAt());
-
-                                                database.getReference()
-                                                        .child("stories")
-                                                        .child(FirebaseAuth.getInstance().getUid())
-                                                        .child("userStories")
-                                                        .push()
-                                                        .setValue(stories).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void unused) {
-                                                        Toast.makeText(getContext(), "Status updated Successfully", Toast.LENGTH_SHORT).show();
-
-                                                        progressDialog.dismiss();
-                                                    }
-                                                });
 
 
-                                            }
-                                        });
-                                    }
-                                });
-                            }
-                        });
 
-                    }
-                });
+
         return view;
     }
 
@@ -402,7 +479,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 auth.signOut();
-                Intent intent = new Intent(getContext(), LoginActivity.class);
+                Intent intent = new Intent(getContext(), StartActivity.class);
                 startActivity(intent);
             }
         });
@@ -418,4 +495,28 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
 
 
     }
+
+    private void UpdateUserProfile(String count) {
+
+        HashMap user=new HashMap();
+        user.put("NotificationCount",count);
+
+        FirebaseAuth Auth=FirebaseAuth.getInstance();
+        FirebaseUser CurrentUser=Auth.getCurrentUser();
+
+        DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference("Users");
+        databaseReference.child(CurrentUser.getUid()).updateChildren(user).addOnCompleteListener(new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task task) {
+
+                if(task.isSuccessful()){
+                    Toast.makeText(getContext(), "Profile Updated Successful", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+    }
+
 }

@@ -52,9 +52,11 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.viewHolder> 
 
         if (story.getStories().size()>0) {
             UserStories lastStory = story.getStories().get(story.getStories().size() - 1);
+
             Picasso.get()
                     .load(lastStory.getImage())
-                    .into(holder.binding.storyimage);
+                    .into(holder.binding.profileImage);
+
             holder.binding.circularstatusview.setPortionsCount(story.getStories().size());
 
             FirebaseDatabase.getInstance().getReference()
@@ -64,9 +66,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.viewHolder> 
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                     User user = snapshot.getValue(User.class);
-                    Picasso.get()
-                            .load(user.getProfile_photo())
-                            .into(holder.binding.profileImage);
+
                     holder.binding.name.setText(user.getName());
 
                     holder.binding.profileImage.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +84,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.viewHolder> 
                                     .setStoriesList(myStories)
                                     .setStoryDuration(5000)
                                     .setTitleText(user.getName())
-                                    .setSubtitleText("hhhhhhh")
                                     .setTitleLogoUrl(user.getProfile_photo())
                                     .setStoryClickListeners(new StoryClickListeners() {
                                         @Override

@@ -213,10 +213,12 @@ public class ChartActivity extends AppCompatActivity {
                     try {
                         Picasso.get()
                                 .load(hisImage)
+                                .placeholder(R.drawable.profile)
                                 .into(profile);
                     } catch (Exception e) {
                         Picasso.get()
                                 .load(R.drawable.profile)
+                                .placeholder(R.drawable.profile)
                                 .into(profile);
                     }
 
