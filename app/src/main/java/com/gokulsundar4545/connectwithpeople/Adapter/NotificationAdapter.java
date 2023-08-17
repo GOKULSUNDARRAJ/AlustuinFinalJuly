@@ -1,10 +1,13 @@
 package com.gokulsundar4545.connectwithpeople.Adapter;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,9 +73,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     @Override
                     public void onDataChange(@NonNull  DataSnapshot snapshot) {
 
+
                         User user=snapshot.getValue(User.class);
                         Picasso.get()
                                 .load(user.getProfile_photo())
+                                .placeholder(R.drawable.profile)
                                 .into(holder.binding.profileImage);
 
                         String text= TimeAgo.using(notification.getNotificationAt());
@@ -80,7 +85,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
 
                         if(type.equals("like")){
-                            holder.binding.notification.setText(Html.fromHtml("<b>"+user.getName()+"</b>" +" "+ "Liked your Post"));
+                            holder.binding.notification.setText(Html.fromHtml("<b>"+user.getName()+"</b>" +" "+ "Liked your Post"+getEmojiByUnicode(0x1F60A)));
+
 
                         }else if (type.equals("follows")){
                             holder.binding.notification.setText(Html.fromHtml("<b>"+user.getName()+"</b>" +" "+ "Start follows you"));
@@ -102,22 +108,28 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             @Override
             public void onClick(View view) {
 
-                FirebaseDatabase.getInstance().getReference()
-                        .child("notification")
-                        .child(notification.getPostBy())
-                        .child(notification.getNotificationId())
-                        .child("checkOpen")
-                        .setValue(true);
+                try{
+                    FirebaseDatabase.getInstance().getReference()
+                            .child("notification")
+                            .child(notification.getPostBy())
+                            .child(notification.getNotificationId())
+                            .child("checkOpen")
+                            .setValue(true);
 
-                if (!type.equals("follows")){
-                    holder.binding.eye.setBackgroundResource(R.drawable.ticks);
-                    Intent intent=new Intent(context, CommentActivity.class);
-                    intent.putExtra("postId",notification.getPostId());
-                    intent.putExtra("postedBy",notification.getPostBy());
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
+                    if (!type.equals("follows")){
+                        holder.binding.eye.setBackgroundResource(R.drawable.ticks);
+                        Intent intent=new Intent(context, CommentActivity.class);
+                        intent.putExtra("postId",notification.getPostId());
+                        intent.putExtra("postedBy",notification.getPostBy());
+                        Bundle b= ActivityOptions.makeSceneTransitionAnimation((Activity) context).toBundle();
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent,b);
+
+                    }
+                }catch (Exception e){
 
                 }
+
 
             }
         });
@@ -188,5 +200,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
 
         }
+    }
+
+    public String getEmojiByUnicode(int unicode){
+        return new String(Character.toChars(unicode));
     }
 }
